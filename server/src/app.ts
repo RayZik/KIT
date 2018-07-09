@@ -11,24 +11,26 @@ import { schema } from 'api'
  * Application server
  */
 class AppServer {
+  /** instance of a app express */
   public app: express.Application;
+
 
   constructor() {
     this.app = express();
-    this.config();
+    this.setConfig();
   }
 
 
   /**
    * Config setter
    */
-  config(): void {
+  setConfig() {
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
     this.app.use(cors());
 
 
-    this.app.use('/graphql', this.checkAuth, bodyParser.json(), graphqlExpress(req => {
+    this.app.use('/gql/api', this.checkAuth, bodyParser.json(), graphqlExpress(req => {
       return {
         schema,
         context: {
@@ -36,7 +38,8 @@ class AppServer {
         }
       };
     }));
-    this.app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+
+    this.app.use('/gqli/api', graphiqlExpress({ endpointURL: '/gql/api' }));
 
     this.app.use((req: express.Request, res: express.Response, next) => {
       next(new Error('Not Found'));
@@ -49,19 +52,15 @@ class AppServer {
         message: err.message
       });
     });
-
   }
+
 
   checkAuth(req, res, next) {
     const isAutorithed = true;
     if (isAutorithed) {
       next();
     } else {
-      res.status(500);
-      res.json({
-        error: { type: 'auth' },
-        message: 'Not Autorithed'
-      });
+      next(new Error('Not Autorithed'));
     }
   }
 }

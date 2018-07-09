@@ -1,3 +1,4 @@
 export enum SQLT {
-  user = 'user'
+  users = 'users',
+  roles = 'roles'
 }

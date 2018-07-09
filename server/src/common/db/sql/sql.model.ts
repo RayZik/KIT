@@ -1,3 +1,6 @@
 export enum SQL {
-  getUser = 'SELECT * FROM ?? WHERE ??=?'
+  selectAllWhere = 'SELECT * FROM ?? select_item WHERE ??=?',
+  selectAll = 'SELECT * FROM ??',
+  form = 'FROM ??',
+  innerJoin = 'INNER JOIN ??'
 }

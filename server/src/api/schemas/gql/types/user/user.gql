@@ -1,4 +1,10 @@
 type TUser {
   id: String,
-  name: String
+  name: String,
+  roles:[TUserRoles]!
+}
+
+type TUserRoles{
+  role: Int,
+  description: String
 }

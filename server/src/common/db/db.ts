@@ -26,7 +26,9 @@ export class DB {
 
 
   public static query(sql: string, params: any[] = []) {
-    const sqlFormatted = format(sql, params)
+    const sqlFormatted = format(sql, params);
+    console.log(sqlFormatted);
+    
     return new Promise((resolve, reject) => {
       DB.connectionPool.getConnection((getConnectErr, connection) => {
         connection.query(sqlFormatted, params, (queryError, result, fields) => {
