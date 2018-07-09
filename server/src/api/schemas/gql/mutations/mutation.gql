@@ -1,0 +1,15 @@
+type Mutation {
+  addUser(params: AddUserInput!): TUser!,
+  updateUser(params: UpdateUserInput!): TUser!,
+}
+
+
+input AddUserInput {
+  uk: String!
+} 
+
+
+input UpdateUserInput { 
+  uk: String!,
+  updates: Object
+} 
