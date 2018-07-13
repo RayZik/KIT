@@ -18,18 +18,17 @@ export const Query = {
     //   INNER JOIN ?? r ON u.roles_id = r.id
     // `;
     const sql = `
-    SELECT  u.id, u.name, r.role, r.description
+    SELECT u.name, r.role, r.description
     FROM users_roles ur
     LEFT JOIN roles r ON ur.role_id = r.id
     LEFT JOIN users u ON ur.user_id = u.id
     WHERE ??=?
     `;
 
-    return DB.query(sql, ['u.id',id])
+    return DB.query(sql, ['u.id', id])
       .then(({ result }) => {
         console.log(result);
         return {
-          id: result[0].id,
           name: result[0].name,
           roles: result.map(el => {
             return {
