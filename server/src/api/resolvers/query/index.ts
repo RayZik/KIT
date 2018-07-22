@@ -1,5 +1,4 @@
-import { DB, SQLT } from "common/db";
-import { SQL } from "common/db/sql/sql.model";
+import { DB } from "../../../common/db";
 
 
 

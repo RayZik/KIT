@@ -23,22 +23,22 @@ export class SeparatorComponent {
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
-    this._apollo.watchQuery({
-      query: gql`
-              {
-                getUser(id:"1"){
-                  name,
-                  roles{
-                    role,
-                    description
-                  }
-                }
-              }
-          `
-    })
-      .valueChanges
-      .subscribe(x => {
-        console.log(x);
-      });
+    // this._apollo.watchQuery({
+    //   query: gql`
+    //           {
+    //             getUser(id:"1"){
+    //               name,
+    //               roles{
+    //                 role,
+    //                 description
+    //               }
+    //             }
+    //           }
+    //       `
+    // })
+    //   .valueChanges
+    //   .subscribe(x => {
+    //     console.log(x);
+    //   });
   }
 }

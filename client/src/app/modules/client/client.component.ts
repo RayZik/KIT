@@ -11,4 +11,18 @@ import { Component } from '@angular/core';
 })
 export class ClientComponent {
   title = 'client';
+  menuItems = [
+    {
+      name: 'Главная',
+      link: '/main'
+    },
+    {
+      name: 'Главная2',
+      link: '/main2'
+    },
+    {
+      name: 'Главная3',
+      link: '/main3'
+    },
+  ];
 }

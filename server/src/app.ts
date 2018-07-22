@@ -3,7 +3,7 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-import { schema } from 'api'
+import { schema } from './api'
 
 
 
