@@ -28,10 +28,10 @@ export class DB {
   public static query(sql: string, params: any[] = []) {
     const sqlFormatted = format(sql, params);
     console.log(sqlFormatted);
-    
+
     return new Promise((resolve, reject) => {
       DB.connectionPool.getConnection((getConnectErr, connection) => {
-        connection.query(sqlFormatted, params, (queryError, result, fields) => {
+        connection.query(sqlFormatted, params, (queryError, result: any[], fields) => {
           connection.release();
 
           if (queryError) { reject(queryError); }
@@ -42,3 +42,14 @@ export class DB {
     });
   }
 }
+
+export enum ERROR_TYPES {
+  reqError = '0',
+  resError = '1',
+}
+
+
+export interface IError {
+  key: string,
+  message: string;
+} 

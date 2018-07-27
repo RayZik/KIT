@@ -1,8 +1,8 @@
 import * as express from 'express';
-import * as bodyParser from 'body-parser';
+import { json, urlencoded } from 'body-parser';
 import * as cors from 'cors';
 
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+import { graphiqlExpress, graphqlExpress } from 'apollo-server-express';
 import { schema } from './api'
 
 
@@ -25,21 +25,37 @@ class AppServer {
    * Config setter
    */
   setConfig() {
-    this.app.use(bodyParser.urlencoded({ extended: true }));
-    this.app.use(bodyParser.json());
+    this.app.use(urlencoded({ extended: true }));
+    this.app.use(json());
     this.app.use(cors());
 
 
-    this.app.use('/gql/api', this.checkAuth, bodyParser.json(), graphqlExpress(req => {
+    this.app.use('/api', this.checkAuth, json(), graphqlExpress(req => {
       return {
         schema,
         context: {
           user: '121212'
-        }
+        },
+        formatError: error => ({
+          type: error.message,
+          stack: error.originalError && error.originalError.stack,
+        }),
+        formatResponse: res => {
+          console.log('res', res);
+          if (res.data) {
+            return res;
+          } else {
+            return { errors: res.errors };
+          }
+        },
       };
     }));
 
-    this.app.use('/gqli/api', graphiqlExpress({ endpointURL: '/gql/api' }));
+    this.app.use('/gapi', graphiqlExpress({ endpointURL: '/api' }));
+
+    this.app.use('*', (req: express.Request, res: express.Response, next) => {
+      res.redirect('/gapi')
+    });
 
     this.app.use((req: express.Request, res: express.Response, next) => {
       next(new Error('Not Found'));
