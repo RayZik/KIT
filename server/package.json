@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "tsc": "tsc",
-    "start:copy": "rsync -r -p -g ./src/api/schemas/gql ./dist",
-    "dev": "concurrently \"tsc -w \" \" rsync -r -p -g ./src/api/schemas/gql ./dist/api/schemas \" \"nodemon ./dist/index.js\" "
+    "start:copy": "rsync -r -p -g ./src/gql ./dist",
+    "dev": "concurrently \"tsc -w \" \" npm run start:copy \" \"nodemon ./dist/index.js\" "
   },
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@
     "@types/graphql": "~0.13.3",
     "@types/mysql": "~2.15.5",
     "@types/node": "~10.5.3",
-    "apollo-server-express": "~1.3.6",
+    "apollo-server-express": "~2.0.0",
     "concurrently": "~3.6.1",
     "lodash": "~4.17.10",
     "nodemon": "~1.17.5",

@@ -47,9 +47,3 @@ export enum ERROR_TYPES {
   reqError = '0',
   resError = '1',
 }
-
-
-export interface IError {
-  key: string,
-  message: string;
-} 

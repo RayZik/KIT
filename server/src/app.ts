@@ -1,8 +1,7 @@
 import * as express from 'express';
-import { json, urlencoded } from 'body-parser';
 import * as cors from 'cors';
 
-import { graphiqlExpress, graphqlExpress } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 import { schema } from './api'
 
 
@@ -25,38 +24,14 @@ class AppServer {
    * Config setter
    */
   setConfig() {
-    this.app.use(urlencoded({ extended: true }));
-    this.app.use(json());
+
     this.app.use(cors());
-
-
-    this.app.use('/api', this.checkAuth, json(), graphqlExpress(req => {
-      return {
-        schema,
-        context: {
-          user: '121212'
-        },
-        formatError: error => ({
-          type: error.message,
-          stack: error.originalError && error.originalError.stack,
-        }),
-        formatResponse: res => {
-          console.log('res', res);
-          if (res.data) {
-            return res;
-          } else {
-            return { errors: res.errors };
-          }
-        },
-      };
-    }));
-
-    this.app.use('/gapi', graphiqlExpress({ endpointURL: '/api' }));
-
-    this.app.use('*', (req: express.Request, res: express.Response, next) => {
-      res.redirect('/gapi')
+    const apolloSer = new ApolloServer({
+      schema,
+      formatResponse: response => this.customFormatResponse(response),
+      formatError: error => this.customFormatError(error),
     });
-
+    apolloSer.applyMiddleware({ app: this.app, path: '/gapi' });
     this.app.use((req: express.Request, res: express.Response, next) => {
       next(new Error('Not Found'));
     });
@@ -68,6 +43,7 @@ class AppServer {
         message: err.message
       });
     });
+
   }
 
 
@@ -78,6 +54,21 @@ class AppServer {
     } else {
       next(new Error('Not Autorithed'));
     }
+  }
+
+  customFormatError(error) {
+    // console.log(error);
+    const extensions = error.extensions;
+    const errors = extensions.exception && extensions.exception.errors ? extensions.exception.errors : {};
+
+    return {
+      code: extensions.code,
+      stack: errors
+    };
+  }
+
+  customFormatResponse(response) {
+    return response.data ? response : { errors: response.errors };
   }
 }
 

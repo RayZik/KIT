@@ -1,5 +1,6 @@
-import { DB, ERROR_TYPES, IError } from "../../../common/db";
-import ValidatorError from "../../validator";
+import { DB } from "../../../common/db";
+import { IError, InputParamError, DatabaseError } from "../../error";
+
 
 
 export class UserQuery {
@@ -15,7 +16,7 @@ export class UserQuery {
     //   errors.push({ key: 'name', message: 'param -name- not found' });
     // }
 
-    if (errors.length) throw new ValidatorError(errors, ERROR_TYPES.reqError);
+    if (errors.length) throw new InputParamError(errors);
 
     const sql = `
       SELECT u.name, r.role, r.description
@@ -35,7 +36,7 @@ export class UserQuery {
             roles: result.map(el => { return { role: el.role, description: el.description } })
           }
         } else {
-          throw new ValidatorError([{ key: 'empty', message: 'Empty response' }], ERROR_TYPES.resError);
+          throw new DatabaseError({ key: 'empty', message: 'Empty response' });
         }
 
         return res;
