@@ -6,7 +6,8 @@
   "scripts": {
     "tsc": "tsc",
     "start:copy": "rsync -r -p -g ./src/gql ./dist",
-    "dev": "concurrently \"tsc -w \" \" npm run start:copy \" \"nodemon ./dist/index.js\" "
+    "dev": "concurrently \"tsc -w \" \" npm run start:copy \" \"nodemon ./dist/index.js\" ",
+    "build": "rm -Rf ./dist && tsc && npm run start:copy"
   },
   "repository": {
     "type": "git",
@@ -16,26 +17,20 @@
   "license": "ISC",
   "homepage": "https://github.com/mralexrabota",
   "dependencies": {
-    "cors": "~2.8.4",
     "express": "~4.16.3",
     "mysql": "~2.16.0",
     "path": "~0.12.7",
-    "body-parser": "~1.18.3",
     "graphql": "~0.13.2",
-    "graphql-tag": "~2.9.2",
-    "graphql-tools": "~3.0.5"
+    "apollo-server-express": "~2.0.0",
+    "lodash": "~4.17.10"
   },
   "devDependencies": {
-    "@types/body-parser": "~1.17.0",
     "@types/cookie-parser": "~1.4.1",
-    "@types/cors": "~2.8.4",
     "@types/express": "~4.16.0",
     "@types/graphql": "~0.13.3",
     "@types/mysql": "~2.15.5",
     "@types/node": "~10.5.3",
-    "apollo-server-express": "~2.0.0",
     "concurrently": "~3.6.1",
-    "lodash": "~4.17.10",
     "nodemon": "~1.17.5",
     "typescript": "~3.0.0-rc"
   }

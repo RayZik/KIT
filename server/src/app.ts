@@ -1,5 +1,4 @@
 import * as express from 'express';
-import * as cors from 'cors';
 
 import { ApolloServer } from 'apollo-server-express';
 import { schema } from './api'
@@ -24,14 +23,14 @@ class AppServer {
    * Config setter
    */
   setConfig() {
+    new ApolloServer(
+      {
+        schema,
+        formatResponse: response => this.customFormatResponse(response),
+        formatError: error => this.customFormatError(error),
+      }
+    ).applyMiddleware({ app: this.app, path: '/gapi' });
 
-    this.app.use(cors());
-    const apolloSer = new ApolloServer({
-      schema,
-      formatResponse: response => this.customFormatResponse(response),
-      formatError: error => this.customFormatError(error),
-    });
-    apolloSer.applyMiddleware({ app: this.app, path: '/gapi' });
     this.app.use((req: express.Request, res: express.Response, next) => {
       next(new Error('Not Found'));
     });

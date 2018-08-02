@@ -4,17 +4,13 @@ import { IError, InputParamError, DatabaseError } from "../../error";
 
 
 export class UserQuery {
-  static getUser({ id, name }) {
+  static getUser({ id }) {
 
     let errors: IError[] = [];
 
     if (!id) {
-      errors.push({ key: 'id', message: 'param -id- not found' });
+      errors.push({ name: 'id', message: 'param -id- not found', type: 'input' });
     }
-
-    // if (!name) {
-    //   errors.push({ key: 'name', message: 'param -name- not found' });
-    // }
 
     if (errors.length) throw new InputParamError(errors);
 
@@ -35,8 +31,6 @@ export class UserQuery {
             name: result[0].name,
             roles: result.map(el => { return { role: el.role, description: el.description } })
           }
-        } else {
-          throw new DatabaseError({ key: 'empty', message: 'Empty response' });
         }
 
         return res;

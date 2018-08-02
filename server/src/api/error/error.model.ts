@@ -1,4 +1,5 @@
 export interface IError {
-  key: string,
+  type: string;
+  name: string,
   message: string;
 } 

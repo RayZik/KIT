@@ -30,7 +30,7 @@ export class AppModule {
     httpLink: HttpLink
   ) {
     apollo.create({
-      link: httpLink.create({ uri: 'http://localhost:3000/gql/api' }),
+      link: httpLink.create({ uri: 'http://localhost:3000/gapi' }),
       cache: new InMemoryCache()
     });
   }

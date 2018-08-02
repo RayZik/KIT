@@ -1,7 +1,8 @@
 import BaseError from "./error-base";
+import { IError } from "./error.model";
 
 export class DatabaseError extends BaseError {
-  constructor(errors, type = 'DATABASE_ERROR') {
+  constructor(errors: IError | IError[], type = 'DATABASE_ERROR') {
     super(errors, type);
   }
 }
