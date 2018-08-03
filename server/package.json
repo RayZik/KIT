@@ -1,0 +1,44 @@
+{
+  "name": "shelter_server",
+  "version": "0.2.1",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "start:copy": "rsync -r -p -g ./src/gql ./dist && mkdir -p dist/public/client && rsync -r ../client/build dist/public/client",
+    "dev": "concurrently \"tsc -w \" \" npm run start:copy \" \"nodemon ./dist/index.js\" ",
+    "build": "rm -Rf ./dist && tsc && npm run start:copy",
+    "deploy": "npm run build &&  node .ghpages server"
+  },
+  "engines": {
+    "node": "8.11.3",
+    "npm": "6.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "ZIK",
+  "license": "ISC",
+  "homepage": "https://github.com/mralexrabota",
+  "dependencies": {
+    "express": "~4.16.3",
+    "mysql": "~2.16.0",
+    "path": "~0.12.7",
+    "graphql": "~0.13.2",
+    "apollo-server-express": "~2.0.0",
+    "lodash": "~4.17.10"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "~1.4.1",
+    "@types/express": "~4.16.0",
+    "@types/graphql": "~0.13.3",
+    "@types/mysql": "~2.15.5",
+    "@types/node": "~10.5.3",
+    "concurrently": "~3.6.1",
+    "gh-pages": "^1.2.0",
+    "nodemon": "~1.17.5",
+    "shelljs": "^0.8.2",
+    "typescript": "~3.0.0-rc"
+  }
+}

@@ -17,10 +17,11 @@ export class DB {
     return createPool({
       connectionLimit: 10,
       ...option,
-      host: 'localhost',
-      user: 'ispsystem',
-      password: 'ispsystem',
-      database: 'stolbovo',
+      host: 'sql2.freemysqlhosting.net',
+      user: 'sql2250285',
+      password: 'dQ9!tV3!',
+      database: 'sql2250285',
+      acquireTimeout: 500000
     });
   }
 

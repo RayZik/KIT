@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as path from 'path';
 
 import { ApolloServer } from 'apollo-server-express';
 import { schema } from './api'
@@ -23,13 +24,24 @@ class AppServer {
    * Config setter
    */
   setConfig() {
+    this.app.use(express.static(path.join(__dirname, 'public/client/build')));
+    this.app.get('/client', (req, res) => {
+      res.sendFile(path.join(__dirname + '/public/client/build/index.html'));
+    });
+
     new ApolloServer(
       {
         schema,
         formatResponse: response => this.customFormatResponse(response),
         formatError: error => this.customFormatError(error),
       }
-    ).applyMiddleware({ app: this.app, path: '/gapi' });
+    ).applyMiddleware({ app: this.app });
+
+    this.app.use('/test', (req: express.Request, res: express.Response, next) => {
+      res.send({ success: true })
+    });
+
+
 
     this.app.use((req: express.Request, res: express.Response, next) => {
       next(new Error('Not Found'));
