@@ -6,7 +6,9 @@
   },
   "dependencies": {
     "abstract-element": "~3.0.0",
-    "path": "~0.12.7"
+    "css-loader": "^1.0.0",
+    "path": "~0.12.7",
+    "style-loader": "^0.22.1"
   },
   "devDependencies": {
     "webpack": "~4.16.5",

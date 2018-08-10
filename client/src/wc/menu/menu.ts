@@ -4,6 +4,8 @@ import { AbstractHyperElement, Define } from 'abstract-element';
 
 import template from './template'
 
+import * as style from './style'
+
 
 @Define('zk-menu')
 export class MenuComponent extends AbstractHyperElement {
@@ -13,7 +15,10 @@ export class MenuComponent extends AbstractHyperElement {
 
 
   constructor() {
-    super('', true);
+    super(style.default, true);
+
+    console.log(style);
+
   }
 
 

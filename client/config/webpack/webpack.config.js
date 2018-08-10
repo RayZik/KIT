@@ -49,6 +49,10 @@ module.exports = {
         loader: 'babel-loader',
         exclude: [PATHS.node_modules]
       },
+      {
+        test: /\.css$/,
+        loader: 'style!css'
+      }
     ]
   },
   devServer: {
