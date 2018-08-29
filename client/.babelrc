@@ -1,5 +1,16 @@
 {
+  "presets": [
+    "@babel/typescript"
+  ],
   "plugins": [
-    "babel-plugin-syntax-dynamic-import"
+    "@babel/proposal-class-properties",
+    "@babel/proposal-object-rest-spread",
+    "babel-plugin-syntax-dynamic-import",
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ]
   ]
 }

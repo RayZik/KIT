@@ -24,9 +24,9 @@ class AppServer {
    * Config setter
    */
   setConfig() {
-    this.app.use(express.static(path.join(__dirname, 'public/client/build')));
+    this.app.use(express.static(path.join(__dirname, 'public/client/dist')));
     this.app.get('/client', (req, res) => {
-      res.sendFile(path.join(__dirname + '/public/client/build/index.html'));
+      res.sendFile(path.join(__dirname + '/public/client/dist/index.html'));
     });
 
     new ApolloServer(

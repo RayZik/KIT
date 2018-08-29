@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "tsc": "tsc",
-    "start:copy": "rsync -r -p -g ./src/gql ./dist && mkdir -p dist/public/client && rsync -r ../client/build dist/public/client",
+    "start:copy": "rsync -r -p -g ./src/gql ./dist && mkdir -p dist/public/client && rsync -r ../client/dist dist/public/client",
     "dev": "concurrently \"tsc -w \" \" npm run start:copy \" \"nodemon ./dist/index.js\" ",
     "build": "rm -Rf ./dist && tsc && npm run start:copy",
     "deploy": "npm run build &&  node .ghpages server"
