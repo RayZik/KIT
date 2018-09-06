@@ -8,7 +8,7 @@ const fs = require('fs');
 if (process.argv.length > 0) {
   for (let j = 2; j < process.argv.length; j++) {
     const type = process.argv[j];
-    if (fs.readdirSync(`./dist`) && fs.readdirSync(`./dist/public/client/build`)) {
+    if (fs.readdirSync(`./dist`) && fs.readdirSync(`./dist/public/client/dist`)) {
       build(type);
     } else {
       console.error(`ERROR: ${type} has empty dist `);
@@ -43,7 +43,7 @@ function deploy(type) {
     if (err) {
       console.error(`${type}: ${err}`);
     } else {
-      console.log(`${type.toUpperCase()}: DEPLOY END SUCCESS!`);
+      console.log(`https://shelter-app-server.herokuapp.com/}: DEPLOY END SUCCESS!`);
     }
   });
 }

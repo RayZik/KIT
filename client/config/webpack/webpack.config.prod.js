@@ -1,5 +1,4 @@
 module.exports = {
-  mode: "production",
   optimization: {
     removeAvailableModules: true,
     removeEmptyChunks: true,

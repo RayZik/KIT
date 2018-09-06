@@ -1,9 +1,9 @@
 type TUser {
   name: String,
-  roles:[TUserRoles]!
+  roles:[TUserRole]!
 }
 
-type TUserRoles{
+type TUserRole{
   role: Int,
   description: String
 }

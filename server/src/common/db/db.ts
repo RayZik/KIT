@@ -17,13 +17,24 @@ export class DB {
     return createPool({
       connectionLimit: 10,
       ...option,
-      host: 'sql2.freemysqlhosting.net',
-      user: 'sql2250285',
-      password: 'dQ9!tV3!',
-      database: 'sql2250285',
+      host: 'localhost',
+      user: 'ispsystem',
+      password: 'ispsystem',
+      database: 'stolbovo',
       acquireTimeout: 500000
     });
   }
+  // public static getConnectionPool(option: PoolConfig = {}) {
+  //   return createPool({
+  //     connectionLimit: 10,
+  //     ...option,
+  //     host: 'sql2.freemysqlhosting.net',
+  //     user: 'sql2250285',
+  //     password: 'dQ9!tV3!',
+  //     database: 'sql2250285',
+  //     acquireTimeout: 500000
+  //   });
+  // }
 
 
   public static query(sql: string, params: any[] = []) {

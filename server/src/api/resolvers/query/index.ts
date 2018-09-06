@@ -2,9 +2,8 @@ import { UserQuery } from "./user";
 
 
 
-/**
- * Queryes resolvers
- */
-export const Query = {
-  getUser(obj, params) { return UserQuery.getUser(params) }
-}
+export default {
+  Query: {
+    user: (obj, args, context, info) => UserQuery.getUser(args.id)
+  }
+};

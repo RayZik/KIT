@@ -1,13 +1,14 @@
 
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const { PATHS } = require('../handler.js');
+const isDevMode = process.env.NODE_ENV === 'development';
 
 module.exports = {
+  mode: process.env.NODE_ENV,
   context: PATHS.root,
-  target: 'web',
   entry: PATHS.entry,
   resolve: {
     extensions: ['.ts', '.js', '.json'],
@@ -29,14 +30,24 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style!css'
+        exclude: /node_modules/,
+        use: [
+          isDevMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              minimize: !isDevMode
+            }
+          }]
       }
     ]
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css',
+    }),
     new HtmlWebpackPlugin({
       template: path.join(PATHS.public, 'index.html'),
-      chunks: ['main'],
       chunksSortMode: 'none',
       hash: false,
       inject: true,

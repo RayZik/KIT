@@ -7,6 +7,7 @@ const PATHS = {
   entry: path.join(root, 'src/main.ts'),
   public: path.join(root, 'public'),
   dist: path.join(root, 'dist'),
+  assets: path.join(root, 'src/assets'),
 }
 
 module.exports = { PATHS };

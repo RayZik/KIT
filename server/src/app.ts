@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as path from 'path';
 
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, addMockFunctionsToSchema } from 'apollo-server-express';
 import { schema } from './api'
 
 
@@ -25,6 +25,8 @@ class AppServer {
    */
   setConfig() {
     this.app.use(express.static(path.join(__dirname, 'public/client/dist')));
+    this.app.use(this.checkAuth);
+
     this.app.get('/client', (req, res) => {
       res.sendFile(path.join(__dirname + '/public/client/dist/index.html'));
     });
@@ -36,6 +38,8 @@ class AppServer {
         formatError: error => this.customFormatError(error),
       }
     ).applyMiddleware({ app: this.app });
+
+    addMockFunctionsToSchema({ schema, mocks: {}, preserveResolvers: true });
 
     this.app.use('/test', (req: express.Request, res: express.Response, next) => {
       res.send({ success: true })
@@ -60,6 +64,7 @@ class AppServer {
 
   checkAuth(req, res, next) {
     const isAutorithed = true;
+
     if (isAutorithed) {
       next();
     } else {
@@ -68,7 +73,6 @@ class AppServer {
   }
 
   customFormatError(error) {
-    // console.log(error);
     const extensions = error.extensions;
     const errors = extensions.exception && extensions.exception.errors ? extensions.exception.errors : {};
 

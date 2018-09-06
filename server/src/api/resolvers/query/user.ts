@@ -4,7 +4,7 @@ import { IError, InputParamError, DatabaseError } from "../../error";
 
 
 export class UserQuery {
-  static getUser({ id }) {
+  static getUser(id) {
 
     let errors: IError[] = [];
 
@@ -25,6 +25,7 @@ export class UserQuery {
     return DB.query(sql, ['u.id', id])
       .then(({ result }) => {
         let res: any = '';
+        console.log(result);
 
         if (result.length) {
           res = {
