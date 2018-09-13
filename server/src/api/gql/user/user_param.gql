@@ -1,0 +1,18 @@
+type UserParam implements Form__Model {
+  group__: UserParam
+
+  name: String!
+  emial: String!
+  avatar: String!
+  
+
+  new_password: String
+  old_password: String
+
+  roles:[UserParamRole!]!
+}
+
+type UserParamRole {
+  role: Int!
+  description: String
+}

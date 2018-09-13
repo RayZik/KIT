@@ -1,13 +1,12 @@
 import * as express from 'express';
 import * as path from 'path';
 
-import { ApolloServer, addMockFunctionsToSchema } from 'apollo-server-express';
-import { schema } from './api'
+import ApolloClass from './apollo.class';
 
 
 
 /**
- * Application server
+ * Application server class
  */
 class AppServer {
   /** instance of a app express */
@@ -21,37 +20,26 @@ class AppServer {
 
 
   /**
-   * Config setter
+   * Express setter
    */
   setConfig() {
+    this.app.use(this.authMiddleware);
     this.app.use(express.static(path.join(__dirname, 'public/client/dist')));
-    this.app.use(this.checkAuth);
 
-    this.app.get('/client', (req, res) => {
-      res.sendFile(path.join(__dirname + '/public/client/dist/index.html'));
-    });
-
-    new ApolloServer(
-      {
-        schema,
-        formatResponse: response => this.customFormatResponse(response),
-        formatError: error => this.customFormatError(error),
-      }
-    ).applyMiddleware({ app: this.app });
-
-    addMockFunctionsToSchema({ schema, mocks: {}, preserveResolvers: true });
-
-    this.app.use('/test', (req: express.Request, res: express.Response, next) => {
+    this.app.use('/test', (req: express.Request, res: express.Response, next: express.NextFunction) => {
       res.send({ success: true })
     });
+    this.app.get('/client', (req: express.Request, res: express.Response) => {
+      res.sendFile(path.join(__dirname + '/public/client/dist/index.html'));
+    });
+    
+    new ApolloClass(this.app);
 
-
-
-    this.app.use((req: express.Request, res: express.Response, next) => {
+    this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
       next(new Error('Not Found'));
     });
 
-    this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    this.app.use((err: any, req: express.Request, res: express.Response) => {
       res.status(err.status || 500);
       res.json({
         error: {},
@@ -62,7 +50,13 @@ class AppServer {
   }
 
 
-  checkAuth(req, res, next) {
+  /**
+   * Middleware for check auth
+   * @param req request
+   * @param res response
+   * @param next next
+   */
+  authMiddleware(req: express.Request, res: express.Response, next: express.NextFunction) {
     const isAutorithed = true;
 
     if (isAutorithed) {
@@ -70,20 +64,6 @@ class AppServer {
     } else {
       next(new Error('Not Autorithed'));
     }
-  }
-
-  customFormatError(error) {
-    const extensions = error.extensions;
-    const errors = extensions.exception && extensions.exception.errors ? extensions.exception.errors : {};
-
-    return {
-      code: extensions.code,
-      stack: errors
-    };
-  }
-
-  customFormatResponse(response) {
-    return response.data ? response : { errors: response.errors };
   }
 }
 

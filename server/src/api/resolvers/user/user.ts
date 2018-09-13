@@ -1,9 +1,9 @@
 import { DB } from "../../../common/db";
-import { IError, InputParamError, DatabaseError } from "../../error";
+import { IError, InputParamError } from "../../error";
 
 
 
-export class UserQuery {
+export default class UserQuery {
   static getUser(id) {
 
     let errors: IError[] = [];

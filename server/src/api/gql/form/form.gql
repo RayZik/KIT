@@ -1,0 +1,12 @@
+enum FormType {
+  user_param
+}
+
+interface Form__Model {
+  group__: Form__Model
+}
+
+
+type Form {
+  model__: Form__Model
+}

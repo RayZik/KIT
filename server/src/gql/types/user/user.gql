@@ -1,9 +1,0 @@
-type TUser {
-  name: String,
-  roles:[TUserRole]!
-}
-
-type TUserRole{
-  role: Int,
-  description: String
-}

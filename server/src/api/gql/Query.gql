@@ -1,0 +1,5 @@
+type Query {
+  form(type: FormType): Form
+
+  user_param: UserParam
+}

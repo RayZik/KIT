@@ -3,12 +3,12 @@ import * as  fs from "fs";
 
 
 /**
- * Common functions
+ * Common tools functions
  */
 export class Tools {
 
   /**
-   * Get file content
+   * Get files content
    * @param dir - directory
    * @param mask - grep filename mask
    * @param code - кодировка файла
