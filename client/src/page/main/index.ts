@@ -9,11 +9,12 @@ import { HttpLink } from 'apollo-link-http';
 import gql from 'graphql-tag';
 
 
+
 @Define('zk-app')
 export class AppComponent extends AbstractHyperElement {
 
   constructor() {
-    super('', true);
+    super(require('./style.css'), true);
 
     const uri = 'http://localhost:3000/graphql';
     // const uri = 'https://shelter-app-server.herokuapp.com/graphql';
@@ -21,7 +22,7 @@ export class AppComponent extends AbstractHyperElement {
 
     const operation = {
       query: gql`query {
-        getUser(id:"1"){
+        user_param{
           name
         }
       }`,
@@ -33,8 +34,8 @@ export class AppComponent extends AbstractHyperElement {
     // execute returns an Observable so it can be subscribed to
     execute(link, operation).subscribe(
       d => {
+        this.state = d.data.user_param;
         console.log(d);
-
       }
     )
   }

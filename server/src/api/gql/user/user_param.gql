@@ -1,11 +1,11 @@
 type UserParam implements Form__Model {
   group__: UserParam
-
+  
+  # id: ID!
   name: String!
   emial: String!
   avatar: String!
   
-
   new_password: String
   old_password: String
 

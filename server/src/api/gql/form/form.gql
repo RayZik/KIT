@@ -2,11 +2,17 @@ enum FormType {
   user_param
 }
 
+
 interface Form__Model {
+  group__: Form__Model
+}
+
+type Form__Groups {
   group__: Form__Model
 }
 
 
 type Form {
+  groups__: Form__Groups
   model__: Form__Model
 }

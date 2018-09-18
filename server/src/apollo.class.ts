@@ -1,5 +1,5 @@
-import { ApolloServer, addMockFunctionsToSchema } from "apollo-server-express";
-import schema from './api'
+import { ApolloServer, addMockFunctionsToSchema, makeExecutableSchema } from "apollo-server-express";
+import { typeDefs, resolvers } from './api'
 
 
 
@@ -17,6 +17,8 @@ export default class ApolloClass {
    * Setter method form apolo server
    */
   setApollo() {
+    const schema = makeExecutableSchema({ typeDefs, resolvers })
+
     const config = {
       schema,
       formatResponse: response => this.customFormatResponse(response),

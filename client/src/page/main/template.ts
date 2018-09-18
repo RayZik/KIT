@@ -5,6 +5,7 @@ export default (html, state) => html`
         <zk-main-menu></zk-main-menu>
       </nav>
     </div>
+    ${state ? state.name : ''}
     <slot></slot>
   </section>
 `;

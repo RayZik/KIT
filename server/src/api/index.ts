@@ -1,9 +1,7 @@
-import { makeExecutableSchema } from 'graphql-tools';
 
-import resolvers from './resolvers';
 import { Tools } from '../common/tools';
 
-const typeDefs = Tools.getDirFiles(`${__dirname}/gql`, '.gql').join();
+import Resolvers from './resolvers';
 
-
-export default makeExecutableSchema({ typeDefs, resolvers });;
+export const typeDefs = Tools.getDirFiles(`${__dirname}/gql`, '.gql').join();
+export const resolvers = Resolvers;

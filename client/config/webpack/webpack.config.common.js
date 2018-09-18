@@ -28,9 +28,20 @@ module.exports = {
         loader: 'babel-loader',
         exclude: [PATHS.node_modules]
       },
+      // {
+      //   test: /\.css$/,
+      //   exclude: /node_modules/,
+      //   use: [
+      //     isDevMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+      //     {
+      //       loader: 'css-loader',
+      //       options: {
+      //         minimize: !isDevMode
+      //       }
+      //     }]
+      // },
       {
         test: /\.css$/,
-        exclude: /node_modules/,
         use: [
           isDevMode ? 'style-loader' : MiniCssExtractPlugin.loader,
           {
@@ -38,8 +49,16 @@ module.exports = {
             options: {
               minimize: !isDevMode
             }
-          }]
-      }
+          }],
+        include: PATHS.assets
+      },
+      {
+        test: /\.css$/,
+        exclude: PATHS.assets,
+        use: [{
+          loader: "raw-loader"
+        }]
+      },
     ]
   },
   plugins: [
