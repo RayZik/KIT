@@ -1,5 +1,5 @@
-type UserParam implements Form__Model {
-  group__: UserParam
+type User implements Form__Model {
+  group__: User
   
   # id: ID!
   name: String!
@@ -9,10 +9,10 @@ type UserParam implements Form__Model {
   new_password: String
   old_password: String
 
-  roles:[UserParamRole!]!
+  roles:[UserRole!]!
 }
 
-type UserParamRole {
+type UserRole {
   role: Int!
   description: String
 }
