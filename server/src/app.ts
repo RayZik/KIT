@@ -2,7 +2,6 @@ import * as express from 'express';
 import * as path from 'path';
 
 import ApolloClass from './apollo.class';
-import { makeExecutableSchema } from 'apollo-server-express';
 
 
 
@@ -26,7 +25,7 @@ class AppServer {
   setConfig() {
     this.app.use(this.authMiddleware);
     this.app.use(express.static(path.join(__dirname, 'public/client/dist')));
-    new ApolloClass(this.app);
+    new ApolloClass(this.app).setApollo();
 
     this.app.use('/test', (req: express.Request, res: express.Response, next: express.NextFunction) => {
       res.send({ success: true })

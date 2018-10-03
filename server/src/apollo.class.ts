@@ -4,12 +4,10 @@ import { typeDefs, resolvers } from './api'
 
 
 export default class ApolloClass {
-  private app;
+  private _app;
 
   constructor(app: Express.Application) {
-    this.app = app;
-
-    this.setApollo();
+    this._app = app;
   }
 
 
@@ -24,7 +22,7 @@ export default class ApolloClass {
       formatResponse: response => this.customFormatResponse(response),
       formatError: error => this.customFormatError(error),
     }
-    new ApolloServer(config).applyMiddleware({ app: this.app });
+    new ApolloServer(config).applyMiddleware({ app: this._app });
 
     addMockFunctionsToSchema({ schema, mocks: {}, preserveResolvers: true });
   }
