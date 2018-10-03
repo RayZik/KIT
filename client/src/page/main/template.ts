@@ -6,6 +6,6 @@ export default (html, state) => html`
       </nav>
     </div>
     ${state ? state.name : ''}
-    <slot></slot>
+    <zk-sign-in></zk-sign-in>
   </section>
 `;
