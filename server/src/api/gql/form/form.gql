@@ -3,16 +3,16 @@ enum FormType {
 }
 
 
-interface Form__Model {
-  group__: Form__Model
+interface IModel {
+  model__: IModel
 }
 
 type Form__Groups {
-  group__: Form__Model
+  group__: IModel
 }
 
 
 type Form {
   groups__: Form__Groups
-  model__: Form__Model
+  model__: IModel
 }

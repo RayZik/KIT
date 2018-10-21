@@ -1,0 +1,4 @@
+type Mutation {
+  user_create(user_param: User_Input__param!): User!
+  user_update(user_param: User_Input__param!): User!
+}

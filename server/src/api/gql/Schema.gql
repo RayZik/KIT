@@ -1,6 +1,0 @@
-scalar Object
-
-type schema {
-  query: Query,
-  # mutation: Mutation
-}

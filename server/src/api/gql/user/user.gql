@@ -1,10 +1,9 @@
-type User implements Form__Model {
-  group__: User
-  
-  # id: ID!
+type User {
+  id: ID!
   name: String!
-  emial: String!
-  avatar: String!
+  email: String!
+  avatar: String
+  password: String!
   
   new_password: String
   old_password: String
@@ -15,4 +14,18 @@ type User implements Form__Model {
 type UserRole {
   role: Int!
   description: String
+}
+
+extend type User implements IModel{
+  model__: User
+}
+
+extend type Query {
+  user(email: String!): User!
+}
+
+input User_Input__param {
+  name: String
+  email: String!
+  password:String!
 }
