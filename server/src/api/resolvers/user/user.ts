@@ -14,10 +14,9 @@ export default class UserQuery {
 
     if (errors.length) throw new InputParamError(errors);
 
-    return await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       User.findOne({ email })
         .then(data => {
-          console.log(data)
           resolve(data);
         })
         .catch(error => {
@@ -80,8 +79,6 @@ export default class UserQuery {
         if (err) {
           console.log("Something wrong when updating data!");
         }
-        console.log(doc);
-
         return doc;
       });
     });
