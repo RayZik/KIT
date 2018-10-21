@@ -5,9 +5,11 @@
   "main": "dist/index.js",
   "scripts": {
     "tsc": "tsc",
-    "dev": "rimraf ./dist && concurrently \"tsc -w \" \" npm run copy:api-watch \" \"nodemon ./dist/index.js\" ",
+    "dev": "rimraf ./dist && concurrently --raw \" npm run copy:api-watch \" \"npm run dev:server\" \"npm run dev:start\"",
     "copy:api": "cpx \"./src/api/**/*.{gql,graphql,proto,json}\" \"./dist/api\"",
     "copy:api-watch": "cpx \"./src/api/**/*.{gql,graphql,json}\" \"./dist/api\" --watch",
+    "dev:server": "NODE_ENV=development tsc -w",
+    "dev:start": "bash ./dev-server-star.sh",
     "build": "rm -Rf ./dist && tsc && npm run copy:api",
     "deploy": "npm run build &&  node .ghpages server"
   },
@@ -23,25 +25,23 @@
   "license": "ISC",
   "homepage": "https://github.com/mralexrabota",
   "dependencies": {
-    "apollo-server-express": "~2.0.6",
+    "apollo-server-express": "~2.1.0",
     "cpx": "~1.5.0",
-    "express": "~4.16.3",
+    "express": "~4.16.4",
     "graphql": "~14.0.2",
-    "mysql": "~2.16.0",
-    "path": "~0.12.7"
+    "path": "~0.12.7",
+    "mongoose": "~5.3.4"
   },
   "devDependencies": {
-    "@types/cookie-parser": "~1.4.1",
     "@types/express": "~4.16.0",
-    "@types/graphql": "~14.0.0",
-    "@types/lodash": "^4.14.116",
-    "@types/mysql": "~2.15.5",
-    "@types/node": "~10.9.4",
+    "@types/graphql": "~14.0.3",
+    "@types/lodash": "^4.14.117",
+    "@types/node": "~10.12.0",
     "concurrently": "~4.0.1",
-    "gh-pages": "~1.2.0",
+    "gh-pages": "~2.0.1",
     "lodash": "~4.17.11",
     "nodemon": "~1.18.4",
     "shelljs": "~0.8.2",
-    "typescript": "~3.0.3"
+    "typescript": "~3.1.3"
   }
 }
