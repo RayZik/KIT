@@ -1,5 +1,5 @@
 {
-  "name": "shelter_client",
+  "name": "KIT_client",
   "version": "1.0.1",
   "scripts": {
     "dev": "NODE_ENV=development webpack-dev-server",
