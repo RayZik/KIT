@@ -9,6 +9,7 @@ import { Strategy } from "passport-local";
 import ApolloClass from './apollo.class';
 import { User } from './database/models';
 import UserQuery from './api/resolvers/user/user';
+import { auth } from './auth';
 
 
 
@@ -22,6 +23,7 @@ class AppServer {
 
   constructor() {
     this.app = express();
+    this.setPassport();
     this.setConfig();
   }
 
@@ -30,21 +32,68 @@ class AppServer {
    * Express setter
    */
   setConfig() {
-    this.setPassport();
 
     this.app.use(express.static(path.join(__dirname, 'public/client/dist')));
     this.app.use(cookieParser());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
-    this.app.use(session({ secret: 'SECRET', resave: true, saveUninitialized: true }));
+    this.app.use(session({ secret: 'passport', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
     this.app.use(passport.initialize());
     this.app.use(passport.session());
 
     new ApolloClass(this.app).setApollo();
 
 
-    this.app.post('/login', this.authSessionMiddle, (req: express.Request, res: express.Response, next: express.NextFunction) => {
-      res.send({ success: true })
+    //POST login route (optional, everyone has access)
+    this.app.post('/login', auth.optional, (req, res, next) => {
+      const { body: { email, password } } = req;
+      console.log(email, password);
+
+      if (!email) {
+        return res.status(422).json({
+          errors: {
+            email: 'is required',
+          },
+        });
+      }
+
+      if (!password) {
+        return res.status(422).json({
+          errors: {
+            password: 'is required',
+          },
+        });
+      }
+
+      return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
+
+        if (err) {
+          return next(err);
+        }
+
+        if (passportUser) {
+          const user = passportUser;
+          user.token = passportUser.generateJWT();
+
+          return res.json({ user: user.toAuthJSON() });
+        }
+
+        return res.status(400);
+      })(req, res, next);
+    });
+
+
+    this.app.get('/current', auth.required, (req, res, next) => {
+      const { payload: { id } }: any = req;
+
+      return User.findById(id)
+        .then((user) => {
+          if (!user) {
+            return res.sendStatus(400);
+          }
+
+          return res.json({ user: user.toAuthJSON() });
+        });
     });
 
     this.app.get('/client', (req: express.Request, res: express.Response) => {
@@ -65,57 +114,38 @@ class AppServer {
   }
 
 
-  /**
-   * Handler for set session token
-   * @param req 
-   * @param res 
-   * @param next 
-   */
-  authSessionMiddle(req, res, next) {
-    passport.authenticate('local',
-      function (err, user, info) {
-        next(user)
-        if (err) {
-          next(err)
-        } else {
-          if (user) {
-            req.logIn(user, function (error) {
-              error ? next(error) : next(user);
-            });
-          }
-        }
-      }
-    )(req, res, next);
-  }
-
   setPassport() {
     passport.use(new Strategy({
       usernameField: 'email',
-      passwordField: 'password'
-    }, function (email: string, password: string, done) {
-      UserQuery.getUser(email)
-        .then((user: any) => {
-          if (user.password === password) {
-            done(null, user);
-          } else {
-            done(null, null);
+      passwordField: 'password',
+    }, (email, password, done) => {
+      User.findOne({ email })
+        .then((user) => {
+          if (!user || !user.validatePassword(password)) {
+            return done(null, false, { message: 'email or password is invalid' });
           }
-        })
-        .catch(error => done(error, false))
+
+          return done(null, user);
+        }).catch(done);
     }));
 
 
-    passport.serializeUser(function (user: any, done) {
-      done(null, user.id);
+    passport.serializeUser((user: any, done) => {
+      if (user) {
+        done(null, user._id);
+      } else {
+        done(null, false);
+      }
     });
 
 
-    passport.deserializeUser(function (id, done) {
-      User.findById(id, function (err, user) {
-        err
-          ? done(err)
-          : done(null, user);
-      });
+    passport.deserializeUser(async (id, done) => {
+      try {
+        const data = await User.findById(id)
+        done(null, data);
+      } catch (err) {
+        done(err, null);
+      }
     });
   }
 

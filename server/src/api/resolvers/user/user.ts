@@ -40,8 +40,8 @@ export default class UserQuery {
 
     if (errors.length) throw new InputParamError(errors);
 
-
     const user = new User(userParam);
+    user.setPassword(userParam.password)
 
     return new Promise((resolve, reject) => {
       user.save((error, data) => {
