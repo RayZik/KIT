@@ -4,4 +4,4 @@ import UserResolver from './user';
 import * as _ from 'lodash';
 
 
-export default _.merge(UserResolver);
+export default _.merge({}, UserResolver);

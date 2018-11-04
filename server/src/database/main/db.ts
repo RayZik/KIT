@@ -16,7 +16,7 @@ class DB {
   }
 
 
-  model(name, schema): mongoose.Model<any> {
+  model(name, schema) {
     return DB._connection.model(name, schema);
   }
 

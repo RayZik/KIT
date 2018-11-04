@@ -3,7 +3,6 @@ import * as jwt from 'express-jwt';
 
 export const getTokenFromHeaders = (req) => {
   const { headers: { authorization } } = req;
-
   if (authorization) {
     return authorization;
   }
@@ -21,6 +20,6 @@ export const auth = {
     secret: 'secret',
     userProperty: 'user',
     getToken: getTokenFromHeaders,
-    credentialsRequired: false,
+    credentialsRequired: false
   }),
 };

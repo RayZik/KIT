@@ -1,9 +1,9 @@
 import { Schema } from 'mongoose';
 import { dbService } from '../main';
 import * as crypto from 'crypto';
-import * as jwt from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 
-export interface User {
+export interface IUser {
   emial: string;
   avatar: string;
   password: string;
@@ -44,9 +44,6 @@ const UserSchema = new Schema({
 
 
 
-
-
-
 UserSchema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString('hex');
   this.password = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
@@ -58,15 +55,10 @@ UserSchema.methods.validatePassword = function (password) {
 };
 
 UserSchema.methods.generateJWT = function () {
-  const today = new Date();
-  const expirationDate = new Date(today);
-  expirationDate.setDate(today.getDate() + 60);
-
-  return jwt.sign({
+  return sign({
     email: this.email,
     id: this._id,
-    exp: parseInt(String(expirationDate.getTime() / 1000), 10),
-  }, 'secret');
+  }, 'secret', { expiresIn: '15m' });
 }
 
 UserSchema.methods.toAuthJSON = function () {
@@ -75,6 +67,10 @@ UserSchema.methods.toAuthJSON = function () {
     email: this.email,
     token: this.generateJWT(),
   };
+}
+
+UserSchema.methods.verifyJWT = function (jwtToken) {
+  verify(jwtToken, 'secret');
 }
 
 export const User = dbService.model('User', UserSchema);

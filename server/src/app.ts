@@ -7,9 +7,26 @@ import * as path from 'path';
 import * as passport from "passport";
 import { Strategy } from "passport-local";
 import ApolloClass from './apollo.class';
-import { User } from './database/models';
 import { auth } from './auth';
+import { User } from './database/models/User';
 
+
+// authentication middleware
+// const authMiddleware = jwt({
+//   // dynamically provide a signing key based on the kid in the header and 
+//   // the signing keys provided by the JWKS endpoint.
+//   secret: jwksRsa.expressJwtSecret({
+//     cache: true,
+//     rateLimit: true,
+//     jwksRequestsPerMinute: 5,
+//     jwksUri: `https://YOUR_AUTH0_DOMAIN/.well-known/jwks.json`
+//   }),
+
+//   // validate the audience and the issuer.
+//   audience: '{YOUR_API_IDENTIFIER}',
+//   issuer: `https://YOUR_AUTH0_DOMAIN/`,
+//   algorithms: ['RS256']
+// })
 
 
 /**
@@ -36,14 +53,15 @@ class AppServer {
     this.app.use(cookieParser());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
-    this.app.use(session({ secret: 'passport', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+    this.app.use(session({ secret: 'passport', resave: false, saveUninitialized: false }));
     this.app.use(passport.initialize());
     this.app.use(passport.session());
-    // this.app.use(this.authMiddle);
-    new ApolloClass(this.app);
+    this.app.use('/graphql', auth.optional);
 
 
-    this.app.post('/login', auth.optional, (req, res, next) => {
+
+    this.app.post('/login', (req, res, next) => {
+
       const { body: { email, password } } = req;
 
       if (!email) {
@@ -70,10 +88,8 @@ class AppServer {
 
         if (passportUser) {
           const user = passportUser;
-          user.token = passportUser.generateJWT();
-          console.log(user.token);
 
-          return res.json(user.toAuthJSON());
+          return res.json({ user: { ...user, ...user.toAuthJSON() } });
         }
 
         return res.status(400);
@@ -81,18 +97,15 @@ class AppServer {
     });
 
 
-    this.app.get('/current', auth.required, (req, res, next) => {
-      const { user: { id } }: any = req;
+    this.app.get('/logout', function (req, res, next) {
+      req.user = null;
+      
+      next()
 
-      return User.findById(id)
-        .then((user) => {
-          if (!user) {
-            return res.sendStatus(400);
-          }
-
-          return res.json({ user: user.toAuthJSON() });
-        });
     });
+
+    new ApolloClass(this.app);
+
 
     this.app.get('/client', (req: express.Request, res: express.Response) => {
       res.sendFile(path.join(__dirname + '/public/client/dist/index.html'));
@@ -117,7 +130,7 @@ class AppServer {
       usernameField: 'email',
       passwordField: 'password',
     }, (email, password, done) => {
-      console.log(22222, email, password);
+
 
       User.findOne({ email })
         .then((user) => {
@@ -126,12 +139,13 @@ class AppServer {
           }
 
           return done(null, user);
-        }).catch(done);
+        }).catch(err => {
+          done(err, false)
+        });
     }));
 
 
     passport.serializeUser((user: any, done) => {
-      console.log('flksd', user);
 
       if (user) {
         done(null, user._id);

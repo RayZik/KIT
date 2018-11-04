@@ -4,8 +4,7 @@ import { User } from "../../../database/models";
 
 
 export default class UserService {
-  static getUser(email: string) {
-
+  static getUser(email: string, { req }) {
     let errors: IError[] = [];
 
     if (!email) {
@@ -23,6 +22,17 @@ export default class UserService {
           reject(error);
         })
     })
+  }
+
+
+  static getCurrentUser({ token, user }) {
+    if (!user) {
+      throw new InputParamError({ name: 'user', message: 'user not found', type: 'input' });
+    }
+
+    user.verifyJWT(token);
+
+    return user
   }
 
 

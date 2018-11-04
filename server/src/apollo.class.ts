@@ -1,6 +1,6 @@
-import { ApolloServer, addMockFunctionsToSchema, makeExecutableSchema } from "apollo-server-express";
+import { ApolloServer, addMockFunctionsToSchema, makeExecutableSchema, AuthenticationError } from "apollo-server-express";
 import { typeDefs, resolvers } from './api'
-import * as passport from 'passport';
+import { User } from "./database/models/User";
 
 
 
@@ -21,7 +21,23 @@ export default class ApolloClass {
 
     const config = {
       schema,
-      context: async ({ req, res, next }) => ({ req, res, next }),
+      context: async ({ req, res, next }) => {
+        const { headers: { authorization }, user: { id } } = req;
+
+        try {
+          const user = await User.findById(id);
+          
+
+          return {
+            token: authorization,
+            user
+          }
+        } catch (err) {
+          throw new AuthenticationError('UNAUTORITHIED')
+        }
+
+
+      },
       formatResponse: response => this.customFormatResponse(response),
       formatError: error => this.customFormatError(error),
     }
