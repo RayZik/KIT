@@ -3,7 +3,7 @@ import { User } from "../../../database/models";
 
 
 
-export default class UserQuery {
+export default class UserService {
   static getUser(email: string) {
 
     let errors: IError[] = [];

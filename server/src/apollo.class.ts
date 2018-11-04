@@ -1,5 +1,6 @@
 import { ApolloServer, addMockFunctionsToSchema, makeExecutableSchema } from "apollo-server-express";
 import { typeDefs, resolvers } from './api'
+import * as passport from 'passport';
 
 
 
@@ -8,6 +9,7 @@ export default class ApolloClass {
 
   constructor(app: Express.Application) {
     this._app = app;
+    this.setApollo();
   }
 
 
@@ -19,10 +21,12 @@ export default class ApolloClass {
 
     const config = {
       schema,
+      context: async ({ req, res, next }) => ({ req, res, next }),
       formatResponse: response => this.customFormatResponse(response),
       formatError: error => this.customFormatError(error),
     }
-    new ApolloServer(config).applyMiddleware({ app: this._app });
+
+    new ApolloServer(config).applyMiddleware({ app: this._app, });
 
     addMockFunctionsToSchema({ schema, mocks: {}, preserveResolvers: true });
   }

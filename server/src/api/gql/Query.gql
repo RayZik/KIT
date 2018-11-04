@@ -1,3 +1,10 @@
 type Query {
+  auth(email: String!, password: String!): Auth!
   form(type: FormType): Form
+}
+
+type Auth {
+  id: ID!
+  email: String!
+  token: String!
 }

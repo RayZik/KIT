@@ -8,7 +8,6 @@ import * as passport from "passport";
 import { Strategy } from "passport-local";
 import ApolloClass from './apollo.class';
 import { User } from './database/models';
-import UserQuery from './api/resolvers/user/user';
 import { auth } from './auth';
 
 
@@ -40,11 +39,10 @@ class AppServer {
     this.app.use(session({ secret: 'passport', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
     this.app.use(passport.initialize());
     this.app.use(passport.session());
+    // this.app.use(this.authMiddle);
+    new ApolloClass(this.app);
 
-    new ApolloClass(this.app).setApollo();
 
-
-    //POST login route (optional, everyone has access)
     this.app.post('/login', auth.optional, (req, res, next) => {
       const { body: { email, password } } = req;
 
@@ -75,7 +73,7 @@ class AppServer {
           user.token = passportUser.generateJWT();
           console.log(user.token);
 
-          return res.json({ user: user.toAuthJSON() });
+          return res.json(user.toAuthJSON());
         }
 
         return res.status(400);
@@ -84,7 +82,7 @@ class AppServer {
 
 
     this.app.get('/current', auth.required, (req, res, next) => {
-      const { payload: { id } }: any = req;
+      const { user: { id } }: any = req;
 
       return User.findById(id)
         .then((user) => {
@@ -119,6 +117,8 @@ class AppServer {
       usernameField: 'email',
       passwordField: 'password',
     }, (email, password, done) => {
+      console.log(22222, email, password);
+
       User.findOne({ email })
         .then((user) => {
           if (!user || !user.validatePassword(password)) {
@@ -131,6 +131,8 @@ class AppServer {
 
 
     passport.serializeUser((user: any, done) => {
+      console.log('flksd', user);
+
       if (user) {
         done(null, user._id);
       } else {
@@ -150,5 +152,6 @@ class AppServer {
   }
 
 }
+
 
 export default new AppServer().app;
