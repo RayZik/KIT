@@ -47,7 +47,6 @@ class AppServer {
     //POST login route (optional, everyone has access)
     this.app.post('/login', auth.optional, (req, res, next) => {
       const { body: { email, password } } = req;
-      console.log(email, password);
 
       if (!email) {
         return res.status(422).json({
@@ -74,6 +73,7 @@ class AppServer {
         if (passportUser) {
           const user = passportUser;
           user.token = passportUser.generateJWT();
+          console.log(user.token);
 
           return res.json({ user: user.toAuthJSON() });
         }
