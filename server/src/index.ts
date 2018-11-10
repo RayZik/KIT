@@ -1,6 +1,6 @@
 import * as http from 'http';
 import * as debug from 'debug';
-import AppServer from './app';
+import AppServer from './main/app';
 
 
 

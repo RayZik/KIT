@@ -1,4 +1,5 @@
 
+
 import * as jwt from 'express-jwt';
 
 export const getTokenFromHeaders = (req) => {
