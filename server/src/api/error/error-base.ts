@@ -1,4 +1,3 @@
-import { GraphQLError } from "graphql";
 import { IError } from "./error.model";
 
 

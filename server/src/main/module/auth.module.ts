@@ -1,8 +1,8 @@
 
 
-import * as jwt from 'express-jwt';
+// import jwt from 'express-jwt';
 
-export const getTokenFromHeaders = (req) => {
+const getTokenFromHeaders = (req) => {
   const { headers: { authorization } } = req;
   if (authorization) {
     return authorization;
@@ -11,16 +11,20 @@ export const getTokenFromHeaders = (req) => {
   return null;
 };
 
-export const auth = {
-  required: jwt({
-    secret: 'secret',
-    userProperty: 'user',
-    getToken: getTokenFromHeaders
-  }),
-  optional: jwt({
-    secret: 'secret',
-    userProperty: 'user',
-    getToken: getTokenFromHeaders,
-    credentialsRequired: false
-  }),
-};
+// export const auth = {
+//   required: jwt({
+//     secret: 'secret',
+//     userProperty: 'user',
+//     getToken: getTokenFromHeaders
+//   }),
+//   optional: jwt({
+//     secret: 'secret',
+//     userProperty: 'user',
+//     getToken: getTokenFromHeaders,
+//     credentialsRequired: false
+//   }),
+// };
+
+
+
+export const AuthModule = { getTokenFromHeaders };

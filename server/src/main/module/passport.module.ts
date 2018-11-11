@@ -1,11 +1,11 @@
-import * as passport from "passport";
+import passport from "passport";
 import { Strategy } from "passport-local";
 
 import { User } from "../../database/models";
 
 
 
-export function setPassport() {
+function setPassport() {
   passport.use(new Strategy({
     usernameField: 'email',
     passwordField: 'password',
@@ -43,3 +43,6 @@ export function setPassport() {
     }
   });
 }
+
+
+export const PassportModule = { setPassport };

@@ -1,16 +1,13 @@
-import * as express from 'express';
-import * as cookieParser from 'cookie-parser';
-import * as bodyParser from 'body-parser';
-import * as session from 'express-session';
+import express, { Router } from 'express';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import session from 'express-session';
 
-import * as path from 'path';
-import * as passport from "passport";
-import ApolloClass from './apollo.class';
-// import { auth } from './auth';
-// import { User } from '../database/models/User';
+import path from 'path';
+import passport from "passport";
+
 import { AuthRouter, PublicRouter } from './route';
-import { setPassport } from './module/passport.module';
-import { Router } from 'express';
+import { PassportModule, ApolloModule } from './module';
 
 
 // authentication middleware
@@ -40,7 +37,7 @@ class AppServer {
   public router: express.Router = Router();
 
   constructor() {
-    setPassport();
+    PassportModule.setPassport();
     this.setConfig();
   }
 
@@ -56,13 +53,12 @@ class AppServer {
     this.app.use(session({ secret: 'passport', resave: false, saveUninitialized: false }));
     this.app.use(passport.initialize());
     this.app.use(passport.session());
-    // this.app.use('/graphql', auth.optional);
 
     // routes
     this.app.use(AuthRouter);
     this.app.use(PublicRouter);
 
-    new ApolloClass(this.app);
+    new ApolloModule.ApolloClass(this.app);
 
     this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
       next(new Error('Not Found'));

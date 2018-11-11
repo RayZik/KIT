@@ -8,6 +8,7 @@
     "experimentalDecorators": true,
     "removeComments": true,
     "noImplicitAny": false,
+    "esModuleInterop": true,
     "outDir": "dist",
     "baseUrl": ".",
     "rootDir": "src",

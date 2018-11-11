@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose';
 import { dbService } from '../main';
-import * as crypto from 'crypto';
+import crypto from 'crypto';
 import { sign, verify } from 'jsonwebtoken';
 
 export interface IUser {

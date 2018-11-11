@@ -1,5 +1,5 @@
 import { Router, Response, NextFunction, Request } from "express";
-import * as passport from "passport";
+import passport from "passport";
 
 
 

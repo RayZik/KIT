@@ -3,8 +3,7 @@ import {
   addMockFunctionsToSchema,
   makeExecutableSchema
 } from "apollo-server-express";
-import { typeDefs, resolvers } from '../api';
-// import { User } from "./database/models/User";
+import { typeDefs, resolvers } from '../../api';
 
 
 
@@ -33,18 +32,7 @@ export default class ApolloClass {
             token
           },
           user
-        }
-        // try {
-        //   const user = await User.findById(id);
-
-
-        //   return {
-        //     token: authorization,
-        //     user
-        //   }
-        // } catch (err) {
-        //   throw new AuthenticationError('UNAUTORITHIED')
-        // }
+        };
       },
       formatResponse: response => this.customFormatResponse(response),
       formatError: error => this.customFormatError(error),
@@ -79,3 +67,6 @@ export default class ApolloClass {
     return response.data ? response : { errors: response.errors };
   }
 }
+
+
+export const ApolloModule = { ApolloClass };
