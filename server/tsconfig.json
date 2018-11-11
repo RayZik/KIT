@@ -10,12 +10,17 @@
     "noImplicitAny": false,
     "esModuleInterop": true,
     "outDir": "dist",
-    "baseUrl": ".",
+    "baseUrl": "src",
     "rootDir": "src",
     "lib": [
       "es2017",
       "esnext.asynciterable"
-    ]
+    ],
+    "paths": {
+      "@api": [
+        "DB/models/index"
+      ]
+    }
   },
   "exclude": [
     "node_modules"

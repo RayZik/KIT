@@ -1,8 +1,12 @@
 import http from 'http';
 import debug from 'debug';
 import AppServer from './main/app';
+import { addAliases } from 'module-alias';
 
-
+addAliases({
+  '@root': __dirname,
+  '@api': __dirname + '/DB/models/index',
+});
 
 debug('ts-express:server');
 
@@ -16,12 +20,14 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+
 function normalizePort(val: number | string): number | string | boolean {
   let port: number = (typeof val === 'string') ? parseInt(val, 10) : val;
   if (isNaN(port)) return val;
   else if (port >= 0) return port;
   else return false;
 }
+
 
 function onError(error: NodeJS.ErrnoException): void {
   if (error.syscall !== 'listen') throw error;
@@ -39,6 +45,7 @@ function onError(error: NodeJS.ErrnoException): void {
       throw error;
   }
 }
+
 
 function onListening(): void {
   let addr = server.address();

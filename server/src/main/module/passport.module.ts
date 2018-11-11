@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
 
-import { User } from "../../database/models";
+import { User } from "../../DB/models";
 
 
 
@@ -10,8 +10,6 @@ function setPassport() {
     usernameField: 'email',
     passwordField: 'password',
   }, (email, password, done) => {
-
-
     User.findOne({ email })
       .then((user) => {
         if (!user || !user.validatePassword(password)) {

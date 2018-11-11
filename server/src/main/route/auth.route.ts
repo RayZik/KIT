@@ -1,5 +1,5 @@
 import { Router, Response, NextFunction, Request } from "express";
-import passport from "passport";
+import { AuthModule } from "../module";
 
 
 
@@ -7,12 +7,12 @@ export const AuthRouter = Router();
 
 
 
-AuthRouter.post('/auth/login', (req: Request, res: Response, next: NextFunction) => {
+AuthRouter.post('/auth/login', async (req: Request, res: Response, next: NextFunction) => {
 
   const { body: { email, password } } = req;
 
   if (!email) {
-    return res.status(422).json({
+    res.status(422).json({
       errors: {
         email: 'is required',
       },
@@ -20,27 +20,47 @@ AuthRouter.post('/auth/login', (req: Request, res: Response, next: NextFunction)
   }
 
   if (!password) {
-    return res.status(422).json({
+    res.status(422).json({
       errors: {
         password: 'is required',
       },
     });
   }
 
-  return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
-
-    if (err) {
-      return next(err);
-    }
-
-    if (passportUser) {
-      return res.json({ user: passportUser.toAuthJSON() });
-    }
-
-    return res.status(400);
-  })(req, res, next);
+  try {
+    res.status(200).json(await AuthModule.login(email, password));
+  } catch (error) {
+    res.status(404).json(error);
+  }
 });
 
+
+AuthRouter.post('/auth/refresh', async (req: Request, res: Response, next: NextFunction) => {
+  const { body: { refreshToken }, headers: { authorization: token } } = req;
+
+
+  if (!refreshToken) {
+    res.status(422).json({
+      errors: {
+        refreshToken: 'is required',
+      },
+    });
+  }
+
+  if (!token) {
+    res.status(422).json({
+      errors: {
+        token: 'is required',
+      },
+    });
+  }
+
+  try {
+    res.status(200).json(await AuthModule.refreshToken(token, refreshToken));
+  } catch (error) {
+    res.status(404).json(error);
+  }
+});
 
 
 AuthRouter.post('/auth/logout', (req: Request, res: Response, next: NextFunction) => {
@@ -51,9 +71,4 @@ AuthRouter.post('/auth/logout', (req: Request, res: Response, next: NextFunction
 
 AuthRouter.post('/auth', (req: Request, res: Response, next: NextFunction) => {
   res.json({ ok: true, location: 'auth' });
-});
-
-
-AuthRouter.post('/auth/refresh', (req: Request, res: Response, next: NextFunction) => {
-  res.json({ ok: true, location: 'refresh' });
 });

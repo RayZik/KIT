@@ -1,30 +1,42 @@
+import { IAuthInfo } from "interface";
+import { AuthService } from "../service/auth.service";
 
 
-// import jwt from 'express-jwt';
 
-const getTokenFromHeaders = (req) => {
-  const { headers: { authorization } } = req;
-  if (authorization) {
-    return authorization;
+/**
+ * Login function
+ * @param email - user email
+ * @param password - user password
+ */
+async function login(email: string, password: string) {
+  try {
+    const user: any = await AuthService.getLogin(email, password);
+
+    return user.toAuthJSON() as IAuthInfo;
+  } catch (error) {
+    throw error;
   }
+}
 
-  return null;
+
+/**
+ * Refresh token function
+ * @param token - current token
+ * @param refreshToken - refresh token
+ */
+async function refreshToken(token: string, refreshToken: string) {
+  try {
+    const user: any = await AuthService.issueNewTokenByRefresh(token, refreshToken);
+
+    return user.toAuthJSON() as IAuthInfo;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+
+export const AuthModule = {
+  login,
+  refreshToken
 };
-
-// export const auth = {
-//   required: jwt({
-//     secret: 'secret',
-//     userProperty: 'user',
-//     getToken: getTokenFromHeaders
-//   }),
-//   optional: jwt({
-//     secret: 'secret',
-//     userProperty: 'user',
-//     getToken: getTokenFromHeaders,
-//     credentialsRequired: false
-//   }),
-// };
-
-
-
-export const AuthModule = { getTokenFromHeaders };

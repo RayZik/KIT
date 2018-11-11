@@ -1,7 +1,12 @@
-import { Schema } from 'mongoose';
-import { dbService } from '../main';
 import crypto from 'crypto';
+import { Schema } from 'mongoose';
 import { sign, verify } from 'jsonwebtoken';
+
+import { dbService } from '../main';
+import { IAuthInfo } from 'interface';
+import { TokenApi } from '../../DB/api';
+
+
 
 export interface IUser {
   emial: string;
@@ -16,6 +21,10 @@ export interface IUserRole {
 }
 
 
+
+/**
+ * User model
+ */
 const UserSchema = new Schema({
   email: {
     type: String,
@@ -44,12 +53,12 @@ const UserSchema = new Schema({
 
 
 
-UserSchema.methods.setPassword = function (password) {
+UserSchema.methods.setPassword = function (password: string) {
   this.salt = crypto.randomBytes(16).toString('hex');
   this.password = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
 };
 
-UserSchema.methods.validatePassword = function (password) {
+UserSchema.methods.validatePassword = function (password: string): boolean {
   const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
   return this.password === hash;
 };
@@ -61,16 +70,24 @@ UserSchema.methods.generateJWT = function () {
   }, 'secret', { expiresIn: '15m' });
 }
 
-UserSchema.methods.toAuthJSON = function () {
+UserSchema.methods.toAuthJSON = async function () {
+  const refreshToken = await TokenApi.issueAndSetRefreshToken(this._id);
+
   return {
-    id: this._id,
-    email: this.email,
-    token: this.generateJWT(),
-  };
+    auth: {
+      token: this.generateJWT(),
+      refreshToken
+    },
+    user: {
+      id: this._id,
+      email: this.email
+    }
+  } as IAuthInfo;
 }
 
-UserSchema.methods.verifyJWT = function (jwtToken) {
-  verify(jwtToken, 'secret');
-}
+// UserSchema.methods.verifyJWT = function (jwtToken: string) {
+//   verify(jwtToken, 'secret');
+// }
+
 
 export const User = dbService.model('User', UserSchema);

@@ -1,5 +1,5 @@
 import { IError, InputParamError } from "../../error";
-import { User } from "../../../database/models";
+import { User } from "../../../DB/models";
 
 
 

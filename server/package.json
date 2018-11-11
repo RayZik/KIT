@@ -8,7 +8,7 @@
     "dev": "rimraf ./dist && concurrently --raw \" npm run copy:api-watch \" \"npm run dev:server\" \"npm run dev:start\"",
     "copy:api": "cpx \"./src/api/**/*.{gql,graphql,proto,json}\" \"./dist/api\"",
     "copy:api-watch": "cpx \"./src/api/**/*.{gql,graphql,json}\" \"./dist/api\" --watch",
-    "dev:server": "NODE_ENV=development tsc -w",
+    "dev:server": "NODE_PATH=src NODE_ENV=development tsc -w",
     "dev:start": "bash ./dev-server-star.sh",
     "build": "rm -Rf ./dist && tsc && npm run copy:api",
     "deploy": "npm run build &&  node .ghpages server"
@@ -34,11 +34,13 @@
     "express-session": "1.15.6",
     "graphql": "14.0.2",
     "jsonwebtoken": "8.3.0",
+    "module-alias": "2.1.0",
     "mongoose": "5.3.11",
     "multer": "1.4.1",
     "passport": "0.4.0",
     "passport-local": "1.0.0",
-    "path": "0.12.7"
+    "path": "0.12.7",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@types/cookie-parser": "1.4.1",
@@ -48,10 +50,12 @@
     "@types/graphql": "14.0.3",
     "@types/jsonwebtoken": "8.3.0",
     "@types/lodash": "4.14.118",
+    "@types/module-alias": "2.0.0",
     "@types/mongoose": "5.3.1",
     "@types/node": "10.12.5",
     "@types/passport": "0.4.7",
     "@types/passport-local": "1.0.33",
+    "@types/uuid": "^3.4.4",
     "concurrently": "4.0.1",
     "gh-pages": "2.0.1",
     "lodash": "4.17.11",

@@ -10,23 +10,6 @@ import { AuthRouter, PublicRouter } from './route';
 import { PassportModule, ApolloModule } from './module';
 
 
-// authentication middleware
-// const authMiddleware = jwt({
-//   // dynamically provide a signing key based on the kid in the header and 
-//   // the signing keys provided by the JWKS endpoint.
-//   secret: jwksRsa.expressJwtSecret({
-//     cache: true,
-//     rateLimit: true,
-//     jwksRequestsPerMinute: 5,
-//     jwksUri: `https://YOUR_AUTH0_DOMAIN/.well-known/jwks.json`
-//   }),
-
-//   // validate the audience and the issuer.
-//   audience: '{YOUR_API_IDENTIFIER}',
-//   issuer: `https://YOUR_AUTH0_DOMAIN/`,
-//   algorithms: ['RS256']
-// })
-
 
 /**
  * Application server class
@@ -37,7 +20,7 @@ class AppServer {
   public router: express.Router = Router();
 
   constructor() {
-    PassportModule.setPassport();
+    // PassportModule.setPassport();
     this.setConfig();
   }
 
