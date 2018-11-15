@@ -14,7 +14,7 @@ async function login(email: string, password: string) {
 
     return user.toAuthJSON() as IAuthInfo;
   } catch (error) {
-    throw error;
+    return error;
   }
 }
 
@@ -30,9 +30,10 @@ async function refreshToken(token: string, refreshToken: string) {
 
     return user.toAuthJSON() as IAuthInfo;
   } catch (error) {
-    throw error;
+    return error;
   }
 }
+
 
 
 

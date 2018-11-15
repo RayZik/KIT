@@ -1,10 +1,10 @@
 import crypto from 'crypto';
 import { Schema } from 'mongoose';
-import { sign, verify } from 'jsonwebtoken';
 
 import { dbService } from '../main';
 import { IAuthInfo } from 'interface';
 import { TokenApi } from '../../DB/api';
+import { JWThelper } from '../../helpers/jwt.helper';
 
 
 
@@ -63,31 +63,22 @@ UserSchema.methods.validatePassword = function (password: string): boolean {
   return this.password === hash;
 };
 
-UserSchema.methods.generateJWT = function () {
-  return sign({
-    email: this.email,
-    id: this._id,
-  }, 'secret', { expiresIn: '15m' });
-}
-
 UserSchema.methods.toAuthJSON = async function () {
   const refreshToken = await TokenApi.issueAndSetRefreshToken(this._id);
+  const user = {
+    id: this._id,
+    email: this.email
+  };
 
   return {
     auth: {
-      token: this.generateJWT(),
+      token: JWThelper.issueToken(user),
       refreshToken
     },
-    user: {
-      id: this._id,
-      email: this.email
-    }
+    user
   } as IAuthInfo;
 }
 
-// UserSchema.methods.verifyJWT = function (jwtToken: string) {
-//   verify(jwtToken, 'secret');
-// }
 
 
 export const User = dbService.model('User', UserSchema);

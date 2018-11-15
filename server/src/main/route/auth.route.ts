@@ -63,12 +63,6 @@ AuthRouter.post('/auth/refresh', async (req: Request, res: Response, next: NextF
 });
 
 
-AuthRouter.post('/auth/logout', (req: Request, res: Response, next: NextFunction) => {
-  req.user = null;
-  res.json({ ok: true, location: 'logout' });
-});
-
-
-AuthRouter.post('/auth', (req: Request, res: Response, next: NextFunction) => {
-  res.json({ ok: true, location: 'auth' });
+AuthRouter.post('/auth/logout', async (req: Request, res: Response, next: NextFunction) => {
+  res.status(200);
 });
