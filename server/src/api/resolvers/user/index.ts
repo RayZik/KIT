@@ -1,12 +1,12 @@
-import UserQuery from "./user";
+import UserService from "./user";
 
 
 
 export default {
   Query: {
-    user: (obj, args, context, info) => UserQuery.getUser(args.email).then(d => d)
+    user: async (obj, args, context, info) => await UserService.getCurrentUser(context)
   },
   Mutation: {
-    user_create: (obj, args, context, info) => UserQuery.createUser(args.user_param).then(d => d)
+    user_create: async (obj, args, context, info) => await UserService.createUser(args.user_param)
   }
 };

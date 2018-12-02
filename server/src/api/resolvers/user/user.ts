@@ -1,11 +1,10 @@
 import { IError, InputParamError } from "../../error";
-import { User } from "../../../database/models";
+import { User } from "../../../DB/models";
 
 
 
-export default class UserQuery {
-  static getUser(email: string) {
-
+export default class UserService {
+  static getUser(email: string, { req }) {
     let errors: IError[] = [];
 
     if (!email) {
@@ -26,6 +25,17 @@ export default class UserQuery {
   }
 
 
+  static getCurrentUser({ token, user }) {
+    if (!user) {
+      throw new InputParamError({ name: 'user', message: 'user not found', type: 'input' });
+    }
+
+    user.verifyJWT(token);
+
+    return user
+  }
+
+
   /**
    * Function for create user
    * @param userParam - params for create user
@@ -40,8 +50,8 @@ export default class UserQuery {
 
     if (errors.length) throw new InputParamError(errors);
 
-
     const user = new User(userParam);
+    user.setPassword(userParam.password)
 
     return new Promise((resolve, reject) => {
       user.save((error, data) => {

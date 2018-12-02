@@ -1,5 +1,9 @@
-import { ApolloServer, addMockFunctionsToSchema, makeExecutableSchema } from "apollo-server-express";
-import { typeDefs, resolvers } from './api'
+import {
+  ApolloServer,
+  addMockFunctionsToSchema,
+  makeExecutableSchema
+} from "apollo-server-express";
+import { typeDefs, resolvers } from '../../api';
 
 
 
@@ -8,21 +12,33 @@ export default class ApolloClass {
 
   constructor(app: Express.Application) {
     this._app = app;
+    this.setApollo();
   }
 
 
   /**
-   * Setter method form apolo server
+   * Setter method form apollo server
    */
   setApollo() {
     const schema = makeExecutableSchema({ typeDefs, resolvers })
 
     const config = {
       schema,
+      context: async ({ req }) => {
+        const { headers: { authorization: token }, user } = req;
+
+        return {
+          auth: {
+            token
+          },
+          user
+        };
+      },
       formatResponse: response => this.customFormatResponse(response),
       formatError: error => this.customFormatError(error),
     }
-    new ApolloServer(config).applyMiddleware({ app: this._app });
+
+    new ApolloServer(config).applyMiddleware({ app: this._app, });
 
     addMockFunctionsToSchema({ schema, mocks: {}, preserveResolvers: true });
   }
@@ -51,3 +67,6 @@ export default class ApolloClass {
     return response.data ? response : { errors: response.errors };
   }
 }
+
+
+export const ApolloModule = { ApolloClass };

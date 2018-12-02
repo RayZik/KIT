@@ -21,7 +21,7 @@ extend type User implements IModel{
 }
 
 extend type Query {
-  user(email: String!): User!
+  user: User!
 }
 
 input User_Input__param {
