@@ -15,9 +15,10 @@ function issueAndSetRefreshToken(user_id: string, refreshToken: string = uuid())
   return new Promise((resolve, reject) => {
     RefreshToken.findOne({ user_id })
       .then(data => {
-        if (data) {
-          removeRefreshToken(user_id);
-          reject();
+        const currentRefreshToken = _.get(data, 'refreshToken', undefined);
+
+        if (!_.isNil(currentRefreshToken)) {
+          resolve(currentRefreshToken);
         } else {
           // make new refresh token for user
           const issueRefreshToken = new RefreshToken({
@@ -43,10 +44,8 @@ function issueAndSetRefreshToken(user_id: string, refreshToken: string = uuid())
  * @param user_id - user id
  */
 function removeRefreshToken(user_id: string) {
-  console.log(user_id, 5555);
-
   return new Promise((resolve, reject) => {
-    RefreshToken.findOneAndRemove(user_id)
+    RefreshToken.findOneAndDelete(user_id)
       .then(data => {
         resolve(data);
       })
@@ -65,9 +64,11 @@ function checkValidRefreshToken(token: string, refreshToken: string) {
     const { id: user_id } = JWThelper.decodeToken(token);
 
     RefreshToken.findOne({ user_id })
-      .then((token: string) => {
-
-        if (!_.isNil(token) && token['refreshToken'] === refreshToken) {
+      .then((tokenDoc: string) => {
+        if (
+          !_.isNil(tokenDoc) &&
+          _.get(tokenDoc, 'refreshToken', undefined) === refreshToken
+        ) {
           resolve(user_id);
         } else {
           reject();

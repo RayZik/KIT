@@ -1,4 +1,4 @@
-import { decode } from 'jsonwebtoken';
+import { decode, verify, sign ,} from 'jsonwebtoken';
 
 
 
@@ -11,17 +11,27 @@ function decodeToken(token: string): any {
 }
 
 
-
 /**
  * @todo Доделать
  * @param id 
  */
-function issueToken(id) {
+function issueToken(params, options = { expiresIn: '15m' }) {
+  return sign({ ...params }, 'secret', options);
+}
 
+
+/**
+ * 
+ * @param jwtToken 
+ */
+function verifyJWT(jwtToken: string) {
+  verify(jwtToken, 'secret');
 }
 
 
 
 export const JWThelper = {
-  decodeToken
+  decodeToken,
+  verifyJWT,
+  issueToken
 }
