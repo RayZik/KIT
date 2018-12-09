@@ -10,7 +10,7 @@ addAliases({
 
 debug('ts-express:server');
 
-const port = normalizePort(3001);
+const port = normalizePort(3000);
 AppServer.set('port', port);
 
 console.log(`Server listening on port ${port}`);

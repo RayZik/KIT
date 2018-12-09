@@ -1,5 +1,5 @@
 /**
- * Auth object token
+ * Auth object
  */
 export interface IAuthInfo {
   auth: {
@@ -7,7 +7,10 @@ export interface IAuthInfo {
     refreshToken: string;
   };
   user: {
-    id: string;
-    email: string;
+    id: string
+    email: string
+    name: string
+    avatar: string
+    roles: any
   }
 }

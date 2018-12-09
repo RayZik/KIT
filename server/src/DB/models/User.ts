@@ -64,16 +64,17 @@ UserSchema.methods.validatePassword = function (password: string): boolean {
 };
 
 UserSchema.methods.toAuthJSON = async function () {
-  const refreshToken = await TokenApi.issueAndSetRefreshToken(this._id);
   const user = {
-    id: this._id,
-    email: this.email
+    id: String(this._id),
+    email: this.email,
+    name: this.name,
+    avatar: this.avatar
   };
 
   return {
     auth: {
       token: JWThelper.issueToken(user),
-      refreshToken
+      refreshToken: await TokenApi.issueAndSetRefreshToken(this._id)
     },
     user
   } as IAuthInfo;

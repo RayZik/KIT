@@ -1,10 +1,28 @@
 type Query {
-  auth(email: String!, password: String!): Auth!
-  form(type: FormType): Form
+  auth_local(email: String!, password: String!): AuthObj!
+  refresh_token(refresh_token: String!): AuthObj!
+}
+
+type AuthObj {
+  auth: Auth!
+  user: User!
 }
 
 type Auth {
-  id: ID!
-  email: String!
   token: String!
+  refreshToken: String!
 }
+
+type User {
+  id: ID!
+  email: String
+  name: String
+  avatar: String
+  roles: [Role]
+}
+
+type Role {
+  role: Int
+  description: String
+}
+

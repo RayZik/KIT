@@ -3,41 +3,29 @@ import { AuthService } from "../service/auth.service";
 
 
 
-/**
- * Login function
- * @param email - user email
- * @param password - user password
- */
-async function login(email: string, password: string) {
-  try {
+export class AuthModule {
+  private constructor() { }
+
+
+  /**
+   * Login function
+   * @param email - user email
+   * @param password - user password
+   */
+  static async  login(email: string, password: string): Promise<IAuthInfo> {
     const user: any = await AuthService.getLogin(email, password);
-
-    return user.toAuthJSON() as IAuthInfo;
-  } catch (error) {
-    return error;
+    return user.toAuthJSON();
   }
-}
 
 
-/**
- * Refresh token function
- * @param token - current token
- * @param refreshToken - refresh token
- */
-async function refreshToken(token: string, refreshToken: string) {
-  try {
+  /**
+   * Refresh token function
+   * @param token - current token
+   * @param refreshToken - refresh token
+   */
+  static async  refreshToken(token: string, refreshToken: string): Promise<IAuthInfo> {
     const user: any = await AuthService.issueNewTokenByRefresh(token, refreshToken);
 
-    return user.toAuthJSON() as IAuthInfo;
-  } catch (error) {
-    return error;
+    return user.toAuthJSON();
   }
 }
-
-
-
-
-export const AuthModule = {
-  login,
-  refreshToken
-};

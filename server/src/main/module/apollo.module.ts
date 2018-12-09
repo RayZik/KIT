@@ -24,21 +24,20 @@ export default class ApolloClass {
 
     const config = {
       schema,
-      context: async ({ req }) => {
-        const { headers: { authorization: token }, user } = req;
+      context: ({ req }) => {
+        const { headers: { authorization: token } } = req;
 
         return {
-          auth: {
+          authInfo: {
             token
-          },
-          user
+          }
         };
       },
       formatResponse: response => this.customFormatResponse(response),
       formatError: error => this.customFormatError(error),
     }
 
-    new ApolloServer(config).applyMiddleware({ app: this._app, });
+    new ApolloServer(config).applyMiddleware({ app: this._app });
 
     addMockFunctionsToSchema({ schema, mocks: {}, preserveResolvers: true });
   }
