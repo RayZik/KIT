@@ -1,6 +1,7 @@
 type Query {
   auth_local(email: String!, password: String!): AuthObj!
   refresh_token(refresh_token: String!): AuthObj!
+  user: User!
 }
 
 type AuthObj {

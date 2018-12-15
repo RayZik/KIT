@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { Schema } from 'mongoose';
+import { Schema, Model } from 'mongoose';
 
 import { dbService } from '../main';
 import { IAuthInfo } from 'interface';
@@ -82,4 +82,4 @@ UserSchema.methods.toAuthJSON = async function () {
 
 
 
-export const User = dbService.model('User', UserSchema);
+export const User: Model<any> = dbService.model('User', UserSchema);

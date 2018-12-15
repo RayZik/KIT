@@ -60,6 +60,7 @@ function removeRefreshToken(user_id: string) {
  * @param refreshToken - refresh token
  */
 function checkValidRefreshToken(token: string, refreshToken: string) {
+
   return new Promise((resolve, reject) => {
     const { id: user_id } = JWThelper.decodeToken(token);
 
@@ -71,7 +72,7 @@ function checkValidRefreshToken(token: string, refreshToken: string) {
         ) {
           resolve(user_id);
         } else {
-          reject();
+          reject(new Error('Refresh token not valid'));
         }
       })
       .catch(error => reject({ error }));

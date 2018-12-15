@@ -1,10 +1,10 @@
 import {
   ApolloServer,
   addMockFunctionsToSchema,
-  makeExecutableSchema
+  makeExecutableSchema,
+  AuthenticationError
 } from "apollo-server-express";
 import { typeDefs, resolvers } from '../../api';
-
 
 
 export default class ApolloClass {
@@ -16,10 +16,12 @@ export default class ApolloClass {
   }
 
 
+
   /**
    * Setter method form apollo server
    */
   setApollo() {
+
     const schema = makeExecutableSchema({ typeDefs, resolvers })
 
     const config = {
@@ -53,6 +55,7 @@ export default class ApolloClass {
 
     return {
       code: extensions.code,
+      message: error.message,
       stack: errors
     };
   }

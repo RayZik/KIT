@@ -17,5 +17,4 @@ const RefreshTokenSchema = new Schema({
 });
 
 
-
 export const RefreshToken = dbService.model('RefreshToken', RefreshTokenSchema);
