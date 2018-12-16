@@ -1,16 +1,15 @@
 import _ from 'lodash';
-// import { Mutation } from './mutation';
 import UserResolver from './user';
 
-import { login, refreshToken } from './auth/auth.query';
+import { login, refreshToken } from './auth/auth.mutation';
 
 
-// export default _.merge(
- export default  {
-    Query: {
-      auth_local: (obj, { email, password }, context, info) => login(email, password),
-      refresh_token: (obj, { refresh_token }, context, info) => refreshToken(context, refresh_token),
+export default _.merge(
+  {
+    Mutation: {
+      auth_local: (obj, { email, password }, ctx, info) => login(email, password),
+      refresh_token: (obj, { refresh_token }, ctx, info) => refreshToken(ctx, refresh_token),
     }
-  };
-  // UserResolver
-// );
+  },
+  UserResolver
+);

@@ -1,22 +1,24 @@
 import { UserApi } from '../../DB/api';
+import { getUserIdFromCtx } from '../utils';
 
 
 
 /**
  * Get user
- * @param id - user id
+ * @param ctx - auth context
  */
-async function getUser(id: string) {
-  return await UserApi.GetUser({ _id: id });
+async function getUser(ctx) {
+  return await UserApi.GetUser({ _id: getUserIdFromCtx(ctx) });
 }
 
 
 /**
  * Set user
- * @param id - user id
+ * @param ctx - auth context
+ * @param param - params for edit user
  */
-async function editUser(id: string, param) {
-  return await UserApi.SetUser(id, param);
+async function editUser(ctx, param) {
+  return await UserApi.SetUser(getUserIdFromCtx(ctx), param);
 }
 
 

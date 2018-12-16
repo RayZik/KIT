@@ -1,29 +1,3 @@
 type Query {
-  auth_local(email: String!, password: String!): AuthObj!
-  refresh_token(refresh_token: String!): AuthObj!
-  user: User!
+  user: User!  
 }
-
-type AuthObj {
-  auth: Auth!
-  user: User!
-}
-
-type Auth {
-  token: String!
-  refreshToken: String!
-}
-
-type User {
-  id: ID!
-  email: String
-  name: String
-  avatar: String
-  roles: [Role]
-}
-
-type Role {
-  role: Int
-  description: String
-}
-

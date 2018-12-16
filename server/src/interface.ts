@@ -11,6 +11,5 @@ export interface IAuthInfo {
     email: string
     name: string
     avatar: string
-    roles: any
   }
 }

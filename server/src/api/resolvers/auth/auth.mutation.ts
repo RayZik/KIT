@@ -9,8 +9,7 @@ import { AuthService } from "../../../main/service";
  * @param password - user password
  */
 export async function login(email: string, password: string): Promise<IAuthInfo> {
-  const user: any = await AuthService.getLogin(email, password);
-  return user.toAuthJSON();
+  return (await AuthService.getLogin(email, password)).toAuthJSON();
 }
 
 
@@ -19,10 +18,8 @@ export async function login(email: string, password: string): Promise<IAuthInfo>
  * @param token - current token
  * @param refreshToken - refresh token
  */
-export async function refreshToken(context, refreshToken: string): Promise<IAuthInfo> {
-  const { token } = context.authInfo;
-
-  const user: any = await AuthService.issueNewTokenByRefresh(token, refreshToken);
-
-  return user.toAuthJSON();
+export async function refreshToken(ctx, refreshToken: string): Promise<IAuthInfo> {
+  const { token } = ctx.authInfo;
+  
+  return (await AuthService.issueNewTokenByRefresh(token, refreshToken)).toAuthJSON();
 }

@@ -1,0 +1,17 @@
+# extend type Query {
+# }
+
+extend type Mutation {
+  user__set(user_param: Input_UserParam!): User!
+}
+
+input Input_UserParam {
+  name: String!
+}
+
+type User {
+  id: ID!
+  email: String
+  name: String
+  avatar: String
+}

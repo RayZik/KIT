@@ -8,20 +8,6 @@ import { JWThelper } from '../../helpers/jwt.helper';
 
 
 
-export interface IUser {
-  emial: string;
-  avatar: string;
-  password: string;
-  roles: IUserRole[]
-}
-
-export interface IUserRole {
-  role: number;
-  description: string;
-}
-
-
-
 /**
  * User model
  */
@@ -40,14 +26,6 @@ const UserSchema = new Schema({
   password: {
     type: String,
   },
-  roles: [{
-    role: {
-      type: Number,
-    },
-    description: {
-      type: String,
-    },
-  }],
   salt: String
 });
 

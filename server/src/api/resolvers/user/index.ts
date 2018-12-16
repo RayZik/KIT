@@ -1,9 +1,13 @@
-// import { getUser } from "./user.query";
+import { getUser } from "./user.query";
+import { editUser } from "./user.mutation";
 
 
 
 export default {
   Query: {
-    // user: async (obj, args, context, info) => await getUser(context)
+    user: (obj, args, ctx, info) => getUser(ctx)
+  },
+  Mutation: {
+    user__set: (obj, args, ctx, info) => editUser(ctx, args)
   }
 };

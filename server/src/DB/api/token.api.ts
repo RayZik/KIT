@@ -59,7 +59,7 @@ function removeRefreshToken(user_id: string) {
  * @param token - access token
  * @param refreshToken - refresh token
  */
-function checkValidRefreshToken(token: string, refreshToken: string) {
+function checkValidRefreshToken(token: string, refreshToken: string): Promise<string> {
 
   return new Promise((resolve, reject) => {
     const { id: user_id } = JWThelper.decodeToken(token);

@@ -7,8 +7,8 @@ import { UserApi, TokenApi } from '../../DB/api';
  * @param email - user email
  * @param password - user password
  */
-async function getLogin(email: string, password: string) {
-  const user: any = await UserApi.GetUser({ email });
+async function getLogin(email: string, password: string): Promise<any> {
+  const user = await UserApi.GetUser({ email });
 
   return new Promise((resolve, reject) => {
     if (!user || !user.validatePassword(password)) {
@@ -27,7 +27,7 @@ async function getLogin(email: string, password: string) {
  * @param refreshToken - refresh token
  */
 async function issueNewTokenByRefresh(token: string, refreshToken: string) {
-  const userId: any = await TokenApi.checkValidRefreshToken(token, refreshToken);
+  const userId = await TokenApi.checkValidRefreshToken(token, refreshToken);
 
   return Promise.all([
     UserApi.GetUser({ _id: userId }),

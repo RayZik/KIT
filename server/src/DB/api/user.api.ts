@@ -33,7 +33,7 @@ async function GetUser(params: { [prop: string]: any }) {
  */
 async function SetUser(id: string, params: { [prop: string]: any }) {
   try {
-    const user = await User.findByIdAndUpdate(id, params);
+    const user = await User.findByIdAndUpdate(id, params, { new: true });
 
     if (!_.isNil(user)) {
       return user;
