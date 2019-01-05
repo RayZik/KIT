@@ -1,22 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { EntryRoutingModule } from './entry-routing.module';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import { EntryComponent } from './entry.component';
+
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    EntryComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    EntryRoutingModule,
     GraphQLModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [EntryComponent]
 })
-export class AppModule { }
+export class EntryModule { }
