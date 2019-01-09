@@ -40,12 +40,18 @@ export class LoginComponent {
           console.log(data);
 
           if (data && data.auth_local) {
-            this._authStoreService.authInfo = data.auth_local;
+            this._authStoreService.authInfo = data.auth_local.auth;
             this._router.navigateByUrl('main');
           }
         },
         e => {
           console.error(e);
+          const elem = document.getElementById('testError');
+          elem.innerText = `Error: ${e}`;
+
+          setTimeout(() => {
+            elem.innerText = '';
+          }, 3000);
         }
       );
     }

@@ -1,27 +1,36 @@
+<p id="testError"></p>
 <form
   [formGroup]="profileForm"
   (ngSubmit)="onSubmit()"
 >
-  <label>
-    E-mail:
+  <div class="app-form__control">
+    <label for="email">
+      E-mail:
+    </label>
+
     <input
       type="text"
+      id="email"
       formControlName="email"
       required
     >
-  </label>
+  </div>
 
-  <label>
-    Password:
+  <div class="app-form__control">
+    <label for="password">
+      Пароль:
+    </label>
+
     <input
       type="text"
+      id="password"
       formControlName="password"
       required
     >
-  </label>
+  </div>
 
   <button
     type="submit"
     [disabled]="!profileForm.valid"
-  >Submit</button>
+  >Войти</button>
 </form>
