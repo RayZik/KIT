@@ -40,8 +40,6 @@ export default class ApolloClass {
     }
 
     new ApolloServer(config).applyMiddleware({ app: this._app });
-
-    addMockFunctionsToSchema({ schema, mocks: {}, preserveResolvers: true });
   }
 
 
@@ -72,3 +70,6 @@ export default class ApolloClass {
 
 
 export const ApolloModule = { ApolloClass };
+
+
+

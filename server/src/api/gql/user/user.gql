@@ -1,0 +1,10 @@
+input UserParam__Input {
+  name: String!
+}
+
+type User {
+  id: ID!
+  email: String
+  name: String
+  avatar_url: String
+}

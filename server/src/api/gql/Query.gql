@@ -1,3 +1,5 @@
+scalar JSON
+
 type Query {
-  user: User!  
+  user: UserQuery
 }

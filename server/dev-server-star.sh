@@ -7,7 +7,7 @@ while true
 do
   if [ -f $INDEX_FILE ]; then
     
-    COMMAND="NODE_ENV=development nodemon ${INDEX_FILE}"
+    COMMAND="NODE_ENV=development nodemon --inspect ${INDEX_FILE}"
     echo ${COMMAND}
     
     eval $COMMAND 
