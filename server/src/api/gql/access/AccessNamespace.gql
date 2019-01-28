@@ -1,8 +1,0 @@
-type AccessMNS {
-  auth: AuthMutation
-}
-
-type AuthMutation {
-  local(email: String!, password: String!): AuthInfo!
-  refresh_token(refresh_token: String!): AuthInfo!
-}

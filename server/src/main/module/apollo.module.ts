@@ -1,10 +1,10 @@
 import {
   ApolloServer,
-  addMockFunctionsToSchema,
   makeExecutableSchema,
-  AuthenticationError
+  SchemaDirectiveVisitor
 } from "apollo-server-express";
 import { typeDefs, resolvers } from '../../api';
+import { schemaDirectives } from "../../api/directives";
 
 
 export default class ApolloClass {
@@ -40,6 +40,8 @@ export default class ApolloClass {
     }
 
     new ApolloServer(config).applyMiddleware({ app: this._app });
+
+    SchemaDirectiveVisitor.visitSchemaDirectives(schema, schemaDirectives);
   }
 
 

@@ -1,4 +1,4 @@
 type Mutation {
-  access: AccessMNS
+  access: AccessMutation
   user: UserMutation
 }

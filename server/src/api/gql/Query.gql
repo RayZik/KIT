@@ -1,5 +1,8 @@
 scalar JSON
 
+directive @oneof on INPUT_OBJECT
+
 type Query {
   user: UserQuery
+  # access: AccessQuery
 }

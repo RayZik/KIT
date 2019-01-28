@@ -39,6 +39,10 @@ class AppServer {
 
 
     this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+       res.redirect('/graphql')
+    });
+
+    this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
       next(new Error('Not Found'));
     });
 

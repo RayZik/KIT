@@ -24,10 +24,10 @@ async function getLogin(email: string, password: string): Promise<any> {
 /**
  * Issue new token by refresh
  * @param token - token 
- * @param refreshToken - refresh token
+ * @param refresh_token - refresh token
  */
-async function issueNewTokenByRefresh(token: string, refreshToken: string) {
-  const userId = await TokenApi.checkValidRefreshToken(token, refreshToken);
+async function issueNewTokenByRefresh(token: string, refresh_token: string) {
+  const userId = await TokenApi.checkValidRefreshToken(token, refresh_token);
 
   return Promise.all([
     UserApi.GetUser({ _id: userId }),

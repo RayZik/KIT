@@ -9,13 +9,13 @@ import { JWThelper } from "../../helpers/jwt.helper";
 /**
  * Method for issue and set new refresh token
  * @param user_id - user id 
- * @param refreshToken - custom refresh token (uuid by default)
+ * @param refresh_token - custom refresh token (uuid by default)
  */
-function issueAndSetRefreshToken(user_id: string, refreshToken: string = uuid()) {
+function issueAndSetRefreshToken(user_id: string, refresh_token: string = uuid()) {
   return new Promise((resolve, reject) => {
     RefreshToken.findOne({ user_id })
       .then(data => {
-        const currentRefreshToken = _.get(data, 'refreshToken', undefined);
+        const currentRefreshToken = _.get(data, 'refresh_token', undefined);
 
         if (!_.isNil(currentRefreshToken)) {
           resolve(currentRefreshToken);
@@ -23,14 +23,14 @@ function issueAndSetRefreshToken(user_id: string, refreshToken: string = uuid())
           // make new refresh token for user
           const issueRefreshToken = new RefreshToken({
             user_id,
-            refreshToken
+            refresh_token
           });
 
           issueRefreshToken.save((error, data) => {
             if (error) {
               reject(error);
             } else {
-              resolve(data.refreshToken);
+              resolve(data.refresh_token);
             }
           });
         }
@@ -57,18 +57,18 @@ function removeRefreshToken(user_id: string) {
 /**
  * Method for validation refresh token
  * @param token - access token
- * @param refreshToken - refresh token
+ * @param refresh_token - refresh token
  */
-function checkValidRefreshToken(token: string, refreshToken: string): Promise<string> {
+function checkValidRefreshToken(token: string, refresh_token: string): Promise<string> {
 
   return new Promise((resolve, reject) => {
     const { id: user_id } = JWThelper.decodeToken(token);
 
     RefreshToken.findOne({ user_id })
-      .then((tokenDoc: string) => {
+      .then((tokenDoc: string) => {        
         if (
           !_.isNil(tokenDoc) &&
-          _.get(tokenDoc, 'refreshToken', undefined) === refreshToken
+          _.get(tokenDoc, 'refresh_token', undefined) === refresh_token
         ) {
           resolve(user_id);
         } else {

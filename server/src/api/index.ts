@@ -50,7 +50,7 @@ function combineWithAuthResolver(objValue, srcValue: { _unauthorizedAccess: stri
 export const resolvers = _.mergeWith(
   Resolvers,
   // {
-  //   AuthMutation: { _unauthorizedAccess: ['auth_local'] },
+  //   AccessMutation: { _unauthorizedAccess: ['auth_local'] },
   // },
   // combineWithAuthResolver
 );

@@ -4,7 +4,7 @@
 export interface IAuthInfo {
   auth: {
     token: string;
-    refreshToken: string;
+    refresh_token: string;
   };
   user: {
     id: string

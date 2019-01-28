@@ -11,7 +11,7 @@ const RefreshTokenSchema = new Schema({
     type: String,
     unique: true
   },
-  refreshToken: {
+  refresh_token: {
     type: String
   }
 });

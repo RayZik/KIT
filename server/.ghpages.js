@@ -43,7 +43,7 @@ function deploy(type) {
     if (err) {
       console.error(`${type}: ${err}`);
     } else {
-      console.log(`https://shelter-app-server.herokuapp.com/}: DEPLOY END SUCCESS!`);
+      console.log(`https://shelter-app-server.herokuapp.com/}: DEPLOY SUCCESS!`);
     }
   });
 }
