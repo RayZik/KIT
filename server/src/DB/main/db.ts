@@ -1,23 +1,27 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
 
 
 class DB {
-  private static _connection;
+  private static connection;
   // private _MONGO_URI: string = process.env.DBURL;
   private _MONGO_URI: string = 'mongodb://localhost:27017/shelter';
 
 
   constructor() {
-    if (typeof DB._connection === 'undefined') {
+    if (DB.connection === undefined) {
       mongoose.set('useCreateIndex', true);
-      DB._connection = this._getDB();
+      DB.connection = this._getDB();
     }
+
+    DB.connection.once('open', function () {
+      console.log('Connection to DB successful');
+    });
   }
 
 
-  model(name, schema) {
-    return DB._connection.model(name, schema);
+  model(name: string, schema: Schema) {
+    return DB.connection.model(name, schema);
   }
 
 

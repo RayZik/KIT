@@ -20,7 +20,7 @@ function issueAndSetRefreshToken(user_id: string, refresh_token: string = uuid()
         if (!_.isNil(currentRefreshToken)) {
           resolve(currentRefreshToken);
         } else {
-          // make new refresh token for user
+          // make a new refresh token for user
           const issueRefreshToken = new RefreshToken({
             user_id,
             refresh_token
@@ -65,7 +65,7 @@ function checkValidRefreshToken(token: string, refresh_token: string): Promise<s
     const { id: user_id } = JWThelper.decodeToken(token);
 
     RefreshToken.findOne({ user_id })
-      .then((tokenDoc: string) => {        
+      .then((tokenDoc: string) => {
         if (
           !_.isNil(tokenDoc) &&
           _.get(tokenDoc, 'refresh_token', undefined) === refresh_token

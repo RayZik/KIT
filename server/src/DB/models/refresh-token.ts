@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { dbService } from '../../DB/main';
+import { dbService } from '../main';
 
 
 

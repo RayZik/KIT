@@ -21,8 +21,7 @@ export default class ApolloClass {
    * Setter method form apollo server
    */
   setApollo() {
-
-    const schema = makeExecutableSchema({ typeDefs, resolvers })
+    const schema = makeExecutableSchema({ typeDefs: [typeDefs], resolvers })
 
     const config = {
       schema,
@@ -35,8 +34,8 @@ export default class ApolloClass {
           }
         };
       },
-      formatResponse: response => this.customFormatResponse(response),
-      formatError: error => this.customFormatError(error),
+      formatResponse: this.formatResponseFn,
+      formatError: this.formatErrorFn,
     }
 
     new ApolloServer(config).applyMiddleware({ app: this._app });
@@ -49,7 +48,7 @@ export default class ApolloClass {
    * Custom formatter for errors
    * @param error from resolver
    */
-  customFormatError(error) {
+  formatErrorFn(error) {
     const extensions = error.extensions;
     const errors = extensions.exception && extensions.exception.errors ? extensions.exception.errors : {};
 
@@ -65,7 +64,7 @@ export default class ApolloClass {
    * Custom formatter for response
    * @param response response from resolver 
    */
-  customFormatResponse(response) {
+  formatResponseFn(response) {
     return response.data ? response : { errors: response.errors };
   }
 }

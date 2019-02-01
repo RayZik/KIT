@@ -2,7 +2,7 @@
 import _ from "lodash";
 
 import { DBError } from "../../api/error/databaseError";
-import { User } from "../../DB/models/User";
+import { User } from "../models/user";
 
 
 
