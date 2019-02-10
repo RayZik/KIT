@@ -5,8 +5,6 @@ import { LoginMutation } from './api/mutation';
 import { AuthStoreService } from 'src/app/services/auth-store.service';
 import { Router } from '@angular/router';
 
-
-
 @Component({
   selector: 'app-auth-login',
   templateUrl: './login.component.html'
@@ -14,7 +12,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   public profileForm = this._formBuilder.group({
     email: ['123', Validators.required],
-    password: ['123', Validators.required],
+    password: ['123', Validators.required]
   });
 
   constructor(
@@ -22,8 +20,7 @@ export class LoginComponent {
     private _apollo: Apollo,
     private _authStoreService: AuthStoreService,
     private _router: Router
-  ) { }
-
+  ) {}
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
@@ -32,28 +29,28 @@ export class LoginComponent {
     if (this.profileForm.valid) {
       const formValues = this.profileForm.value;
 
-      this._apollo.mutate({
-        mutation: LoginMutation.auth_local,
-        variables: formValues
-      }).subscribe(
-        ({ data }) => {
-          console.log(data);
+      this._apollo
+        .mutate({
+          mutation: LoginMutation.auth_local,
+          variables: formValues
+        })
+        .subscribe(
+          ({ data }) => {
+            const { auth_local = null } = data.access;
 
-          if (data && data.auth_local) {
-            this._authStoreService.authInfo = data.auth_local.auth;
-            this._router.navigateByUrl('main');
+            if (auth_local) {
+              this._authStoreService.authInfo = auth_local.auth;
+              this._router.navigateByUrl('main');
+            }
+          },
+          e => {
+            const elem = document.getElementById('testError');
+            elem.innerText = `ERROR: ${e}`;
+            setTimeout(() => {
+              elem.innerText = '';
+            }, 3000);
           }
-        },
-        e => {
-          console.error(e);
-          const elem = document.getElementById('testError');
-          elem.innerText = `Error: ${e}`;
-
-          setTimeout(() => {
-            elem.innerText = '';
-          }, 3000);
-        }
-      );
+        );
     }
   }
 }
