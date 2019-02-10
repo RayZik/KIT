@@ -1,4 +1,5 @@
 type AccessMutation {
   auth_local(email: String!, password: String!): AuthInfo!
   refresh_token(refresh_token: String!): AuthInfo!
+  registartion(params: RegistartionParams__Input!): AuthInfo!
 }

@@ -1,0 +1,5 @@
+input RegistartionParams__Input {
+  email: String!
+  password: String!
+  name: String
+}
