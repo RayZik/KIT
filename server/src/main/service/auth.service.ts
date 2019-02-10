@@ -1,4 +1,6 @@
 import { UserApi, TokenApi } from '../../DB/api';
+import { DBError } from "../../api/error/databaseError";
+
 
 
 
@@ -8,15 +10,28 @@ import { UserApi, TokenApi } from '../../DB/api';
  * @param password - user password
  */
 async function getLogin(email: string, password: string): Promise<any> {
-  const user = await UserApi.GetUser({ email });
-
-  return new Promise((resolve, reject) => {
+  try {
+    const user = await UserApi.GetUser({ email });
     if (!user || !user.validatePassword(password)) {
-      reject();
-    } else {
-      resolve(user);
+      throw new DBError({ message: "not valid", name: "not valid", type: "not valid" });
     }
-  });
+
+    return user.toAuthJSON();
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+/**
+ * Get login information function
+ * @param email - user email
+ * @param password - user password
+ */
+async function getRegistration(params) {
+  const data = await UserApi.CreateUser(params) as any;
+
+  return data.toAuthJSON()
 }
 
 
@@ -33,7 +48,7 @@ async function issueNewTokenByRefresh(token: string, refresh_token: string) {
     UserApi.GetUser({ _id: userId }),
     TokenApi.removeRefreshToken(userId)
   ])
-    .then(values => values[0])
+    .then(values => values[0].toAuthJSON())
     .catch(error => error)
 }
 
@@ -41,5 +56,6 @@ async function issueNewTokenByRefresh(token: string, refresh_token: string) {
 
 export const AuthService = {
   getLogin,
+  getRegistration,
   issueNewTokenByRefresh
 };

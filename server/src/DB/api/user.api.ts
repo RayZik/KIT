@@ -1,4 +1,3 @@
-// import { User } from "@api";
 import _ from "lodash";
 
 import { DBError } from "../../api/error/databaseError";
@@ -18,10 +17,10 @@ async function GetUser(params: { [prop: string]: any }) {
       return user;
     } else {
       /** @todo заменить на общий механизм ошибок */
-      return new DBError({ message: 'User not found', name: 'user', type: 'not_found' });
+      throw new DBError({ message: 'User not found', name: 'user', type: 'not_found' });
     }
   } catch (error) {
-    return error;
+    throw new DBError(error);
   }
 }
 
@@ -39,16 +38,37 @@ async function SetUser(id: string, params: { [prop: string]: any }) {
       return user;
     } else {
       /** @todo заменить на общий механизм ошибок */
-      return new DBError({ message: 'User not found', name: 'user', type: 'not_found' });
+      throw new DBError({ message: 'User not found', name: 'user', type: 'not_found' });
     }
   } catch (error) {
-    return error;
+    throw new DBError(error);
   }
+}
+
+
+/**
+ * Method for set user param
+ * @param id user id
+ * @param params - params for search user
+ */
+async function CreateUser(params) {
+  const newUser = new User(params);
+  return new Promise((resolve, reject) => {
+    newUser.save((error, data) => {
+      if (error) {
+        reject(new DBError({ message: 'User existed', name: 'user', type: 'exist' }))
+      } else {
+        resolve(data)
+      }
+    });
+  })
+
 }
 
 
 
 export const UserApi = {
   GetUser,
+  CreateUser,
   SetUser
 };
