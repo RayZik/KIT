@@ -10,16 +10,12 @@ import { DBError } from "../../api/error/databaseError";
  * @param password - user password
  */
 async function getLogin(email: string, password: string): Promise<any> {
-  try {
     const user = await UserApi.GetUser({ email });
     if (!user || !user.validatePassword(password)) {
       throw new DBError({ message: "not valid", name: "not valid", type: "not valid" });
     }
 
     return user.toAuthJSON();
-  } catch (error) {
-    throw error;
-  }
 }
 
 
