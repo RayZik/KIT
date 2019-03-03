@@ -3,9 +3,9 @@ import { AuthenticationError } from 'apollo-server-core';
 import { combineResolvers } from 'graphql-resolvers';
 import _ from 'lodash';
 import { JWThelper } from '../helpers/jwt.helper';
-import { getDirFiles } from '../utils/tools';
+import { getDirFileContents } from '../utils/tools';
 
-export const typeDefs = getDirFiles(`${__dirname}/gql`, '.gql').join();
+export const typeDefs = getDirFileContents(`${__dirname}/gql`, '.gql').join();
 
 /**
  * The utility resolver to check access

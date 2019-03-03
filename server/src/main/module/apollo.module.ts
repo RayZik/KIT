@@ -7,7 +7,10 @@ import { typeDefs, resolvers } from '../../api';
 import { schemaDirectives } from '../../api/directives';
 import { GraphQLFormattedError } from 'graphql';
 
-export default class ApolloClass {
+/**
+ *
+ */
+export default class ApolloBuilderClass {
   private _app;
 
   constructor(app: Express.Application) {
@@ -16,7 +19,7 @@ export default class ApolloClass {
   }
 
   /**
-   * Setter method form apollo server
+   * Apollo server configuration
    */
   setApollo() {
     const schema = makeExecutableSchema({ typeDefs: [typeDefs], resolvers });
@@ -25,12 +28,12 @@ export default class ApolloClass {
       schema,
       context: ({ req }) => {
         const {
-          headers: { authorization: token }
+          headers: { authorization }
         } = req;
 
         return {
           authInfo: {
-            token
+            token: authorization
           }
         };
       },
@@ -72,4 +75,4 @@ export default class ApolloClass {
   }
 }
 
-export const ApolloModule = { ApolloClass };
+export { ApolloBuilderClass };

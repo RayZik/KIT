@@ -1,3 +1,11 @@
+type UserQuery {
+  get: User!
+}
+
+type UserMutation {
+  set(user_param: UserParam__Input!): User!
+}
+
 input UserParam__Input {
   name: String!
 }

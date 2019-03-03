@@ -1,22 +1,22 @@
 import fs from 'fs';
 
 /**
- * Get files content
+ * Get file contents
  * @param dir - directory
  * @param mask - grep filename mask
- * @param code - кодировка файла
+ * @param encoding - encoding
  * @param files - files array
  */
-export function getDirFiles(
+export function getDirFileContents(
   dir: string,
   mask: string = '',
-  code: string = 'utf8',
-  files = [],
+  encoding: string = 'utf8',
+  files = []
 ): string[] {
   // getting the list of files
   const filesNames = fs.readdirSync(dir);
 
-  filesNames.forEach(fileName => {
+  filesNames.forEach((fileName) => {
     // creating the path of file
     const path = `${dir}/${fileName}`;
     // getting the information of file
@@ -24,11 +24,11 @@ export function getDirFiles(
 
     // if it's a directory, then we go into it
     if (stat.isDirectory()) {
-      this.getDirFiles(path, mask, code, files);
+      getDirFileContents(path, mask, encoding, files);
     } else {
       // else if it type is file and и он подходит под маску то then them content adding into variable
       if (fileName.match(String(mask)) !== null) {
-        const content = fs.readFileSync(path, code);
+        const content = fs.readFileSync(path, encoding);
         files.push(content);
       }
     }
