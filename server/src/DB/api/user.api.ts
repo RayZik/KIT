@@ -1,9 +1,7 @@
-import _ from "lodash";
+import _ from 'lodash';
 
-import { DBError } from "../../api/error/databaseError";
-import { User } from "../models/user";
-
-
+import { DBError } from '../../api/error/databaseError';
+import { User } from '../models/user';
 
 /**
  * Method for get user by params
@@ -17,13 +15,16 @@ async function GetUser(params: { [prop: string]: any }) {
       return user;
     } else {
       /** @todo заменить на общий механизм ошибок */
-      throw new DBError({ message: 'User not found', name: 'user', type: 'not_found' });
+      throw new DBError({
+        message: 'User not found',
+        name: 'user',
+        type: 'not_found'
+      });
     }
   } catch (error) {
     throw new DBError(error);
   }
 }
-
 
 /**
  * Method for set user param
@@ -38,13 +39,16 @@ async function SetUser(id: string, params: { [prop: string]: any }) {
       return user;
     } else {
       /** @todo заменить на общий механизм ошибок */
-      throw new DBError({ message: 'User not found', name: 'user', type: 'not_found' });
+      throw new DBError({
+        message: 'User not found',
+        name: 'user',
+        type: 'not_found'
+      });
     }
   } catch (error) {
     throw new DBError(error);
   }
 }
-
 
 /**
  * Method for set user param
@@ -56,16 +60,15 @@ async function CreateUser(params) {
   return new Promise((resolve, reject) => {
     newUser.save((error, data) => {
       if (error) {
-        reject(new DBError({ message: 'User existed', name: 'user', type: 'exist' }))
+        reject(
+          new DBError({ message: 'User exist!', name: 'user', type: 'exist' })
+        );
       } else {
-        resolve(data)
+        resolve(data);
       }
     });
-  })
-
+  });
 }
-
-
 
 export const UserApi = {
   GetUser,

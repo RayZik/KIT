@@ -1,7 +1,6 @@
-import _ from "lodash";
-import { JWThelper } from "../helpers/jwt.helper";
-
-
+import _ from 'lodash';
+import { JWThelper } from '../helpers/jwt.helper';
+import { AuthenticationError } from 'apollo-server-core';
 
 /**
  * Handler for get user id from context
@@ -9,6 +8,10 @@ import { JWThelper } from "../helpers/jwt.helper";
  */
 export function getUserIdFromCtx(ctx) {
   const token = _.get(ctx, 'authInfo.token', '');
-  const { id } = JWThelper.decodeToken(token)
-  return id;
+  if (token) {
+    const { id } = JWThelper.decodeToken(token);
+    return id;
+  } else {
+    throw new AuthenticationError('Token not found');
+  }
 }

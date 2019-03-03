@@ -1,8 +1,6 @@
 import { UserApi } from '../../DB/api';
 import { getUserIdFromCtx } from '../utils';
 
-
-
 /**
  * Get user
  * @param ctx - auth context
@@ -10,7 +8,6 @@ import { getUserIdFromCtx } from '../utils';
 async function getUser(ctx) {
   return await UserApi.GetUser({ _id: getUserIdFromCtx(ctx) });
 }
-
 
 /**
  * Set user
@@ -20,7 +17,6 @@ async function getUser(ctx) {
 async function editUser(ctx, param) {
   return await UserApi.SetUser(getUserIdFromCtx(ctx), param);
 }
-
 
 export const UserService = {
   getUser,

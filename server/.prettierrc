@@ -3,30 +3,10 @@
     {
       "files": "*.ts",
       "options": {
-        "arrowParens": "avoid",
-        "bracketSpacing": true,
-        "insertPragma": false,
+        "arrowParens": "always",
         "parser": "typescript",
-        "proseWrap": "preserve",
-        "requirePragma": false,
-        "semi": true,
+        "proseWrap": "always",
         "singleQuote": true,
-        "tabWidth": 2,
-        "trailingComma": "all",
-        "useTabs": false,
-        "printWidth": 80
-      }
-    },
-    {
-      "files": [".prettierrc"],
-      "options": {
-        "parser": "json"
-      }
-    },
-    {
-      "files": "*.gql",
-      "options": {
-        "parser": "graphql"
       }
     }
   ]
