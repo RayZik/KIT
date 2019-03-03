@@ -1,7 +1,6 @@
 import express, { Router } from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import session from 'express-session';
 
 import path from 'path';
 
@@ -31,7 +30,6 @@ class AppServer {
     this.app.use(cookieParser());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
-    this.app.use(session({ secret: 'passport', resave: false, saveUninitialized: false }));
 
     // routes
     new ApolloModule.ApolloClass(this.app);

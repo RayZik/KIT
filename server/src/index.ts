@@ -1,12 +1,7 @@
 import http from 'http';
 import debug from 'debug';
 import AppServer from './main/app';
-import { addAliases } from 'module-alias';
 
-addAliases({
-  '@root': __dirname,
-  '@api': __dirname + '/DB/models/index',
-});
 
 debug('ts-express:server');
 
