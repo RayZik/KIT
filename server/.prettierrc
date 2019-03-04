@@ -6,7 +6,7 @@
         "arrowParens": "always",
         "parser": "typescript",
         "proseWrap": "always",
-        "singleQuote": true,
+        "singleQuote": true
       }
     }
   ]

@@ -81,7 +81,7 @@ function checkValidRefreshToken(token: string, refresh_token: string): Promise<s
 
 
 
-export const TokenApi = {
+export const TokenFn = {
   issueAndSetRefreshToken,
   checkValidRefreshToken,
   removeRefreshToken

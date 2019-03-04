@@ -1,10 +1,10 @@
 import crypto from 'crypto';
 import { Schema, Model, Document, model } from 'mongoose';
 
-import { dbService } from '../main';
 import { IAuthInfo } from 'interface';
-import { TokenApi } from '../api';
+import { TokenFn } from '../functions';
 import { JWThelper } from '../../helpers/jwt.helper';
+import { DB } from '../db.class';
 
 interface IUser {
   email: string;
@@ -30,23 +30,23 @@ interface IUserModel extends IUser, Document {
 const UserSchema: Schema<IUserSchema> = new Schema({
   email: {
     type: String,
-    unique: true,
+    unique: true
   },
   name: {
-    type: String,
+    type: String
   },
   avatar_url: {
     type: String,
-    default: '',
+    default: ''
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
   salt: {
-    type: String,
+    type: String
     // select: false
-  },
+  }
 });
 
 UserSchema.methods.validatePassword = function(password: string): boolean {
@@ -58,15 +58,15 @@ UserSchema.methods.toAuthJSON = async function() {
     id: String(this._id),
     email: this.email,
     name: this.name,
-    avatar_url: this.avatar_url,
+    avatar_url: this.avatar_url
   };
 
   return {
     auth: {
       token: JWThelper.issueToken(user),
-      refresh_token: await TokenApi.issueAndSetRefreshToken(this._id),
+      refresh_token: await TokenFn.issueAndSetRefreshToken(this._id)
     },
-    user,
+    user
   } as IAuthInfo;
 };
 
@@ -86,7 +86,7 @@ function hashPassword(password: string, salt: string) {
     .toString('hex');
 }
 
-export const User: Model<IUserModel> = dbService.model('User', UserSchema);
+export const User: Model<IUserModel> = DB.model('User', UserSchema);
 
 // const user = new User({
 //   email: '123',

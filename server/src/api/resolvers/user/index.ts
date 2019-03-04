@@ -1,12 +1,12 @@
-import { UserService } from '../../../main/service';
+import { getUser, editUser } from './user.functions';
 
 export default {
   UserQuery: {
-    get: (obj, args, ctx, info) => UserService.getUser(ctx),
+    get: (obj, args, ctx, info) => getUser(ctx)
   },
   UserMutation: {
     set: (obj, { user_param }, ctx, info) => {
-      return UserService.editUser(ctx, user_param);
-    },
-  },
+      return editUser(ctx, user_param);
+    }
+  }
 };

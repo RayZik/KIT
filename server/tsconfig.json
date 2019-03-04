@@ -15,12 +15,7 @@
     "lib": [
       "es2017",
       "esnext.asynciterable"
-    ],
-    "paths": {
-      "@api": [
-        "DB/models/index"
-      ]
-    }
+    ]
   },
   "exclude": [
     "node_modules"

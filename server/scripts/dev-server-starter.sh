@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-INDEX_FILE="./dist/index.js"
+INDEX_FILE="./dist/bin/www.js"
 i=0
 
 while true
