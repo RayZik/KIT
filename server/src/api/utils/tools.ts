@@ -1,4 +1,8 @@
 import fs from 'fs';
+import _ from 'lodash';
+import { AuthenticationError } from 'apollo-server-core';
+import { IAuthContext } from 'interface';
+import { JWThelper } from '../../helpers/jwt.helper';
 
 /**
  * Get file contents
@@ -35,4 +39,18 @@ export function getDirFileContents(
   });
 
   return files;
+}
+
+/**
+ * Handler for get user id from context
+ * @param ctx - context
+ */
+export function getUserIdFromCtx(ctx: IAuthContext) {
+  const token = _.get(ctx, 'authInfo.token', '');
+  if (token) {
+    const { id } = JWThelper.decodeToken(token);
+    return id;
+  } else {
+    throw new AuthenticationError('Token not found');
+  }
 }

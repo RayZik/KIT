@@ -3,14 +3,15 @@
   "version": "0.3.0",
   "description": "",
   "main": "dist/index.js",
+  "private": true,
   "scripts": {
     "dev": "rimraf ./dist && concurrently --raw \" npm run copy:api-watch \" \"npm run dev:server\" \"npm run dev:start\"",
     "copy:api": "cpx \"./src/api/**/*.{gql,graphql,json}\" \"./dist/api\"",
     "copy:api-watch": "cpx \"./src/api/**/*.{gql,graphql,json}\" \"./dist/api\" --watch",
     "dev:server": "NODE_PATH=src NODE_ENV=development tsc -w",
-    "dev:start": "bash ./dev-server-starter.sh",
+    "dev:start": "bash ./scripts/dev-server-starter.sh",
     "build": "rm -Rf ./dist && tsc && npm run copy:api",
-    "deploy": "npm run build &&  node .ghpages server"
+    "deploy": "npm run build &&  node ./scripts/.ghpages server"
   },
   "engines": {
     "node": "8.11.3",

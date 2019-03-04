@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
-import { DBError } from '../../api/error/databaseError';
 import { User } from '../models/user';
+import { DBError } from '../../api/error';
 
 /**
  * Method for get user by params
@@ -70,7 +70,7 @@ async function CreateUser(params) {
   });
 }
 
-export const UserApi = {
+export const UserFn = {
   GetUser,
   CreateUser,
   SetUser

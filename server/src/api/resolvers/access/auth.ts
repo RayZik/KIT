@@ -1,5 +1,5 @@
 import { IAuthInfo } from 'interface';
-import { AuthService } from '../../../main/service';
+import { getLogin, issueNewTokenByRefresh } from './access.functions';
 
 /**
  * Login function
@@ -8,9 +8,9 @@ import { AuthService } from '../../../main/service';
  */
 export async function login(
   email: string,
-  password: string,
+  password: string
 ): Promise<IAuthInfo> {
-  return await AuthService.getLogin(email, password);
+  return await getLogin(email, password);
 }
 
 /**
@@ -20,8 +20,8 @@ export async function login(
  */
 export async function refreshToken(
   ctx,
-  refresh_token: string,
+  refresh_token: string
 ): Promise<IAuthInfo> {
   const { token } = ctx.authInfo;
-  return await AuthService.issueNewTokenByRefresh(token, refresh_token);
+  return await issueNewTokenByRefresh(token, refresh_token);
 }

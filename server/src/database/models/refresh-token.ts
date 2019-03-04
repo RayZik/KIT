@@ -1,7 +1,5 @@
 import { Schema } from 'mongoose';
-import { dbService } from '../main';
-
-
+import { DB } from '../db.class';
 
 /**
  * Refresh token model
@@ -16,5 +14,4 @@ const RefreshTokenSchema = new Schema({
   }
 });
 
-
-export const RefreshToken = dbService.model('RefreshToken', RefreshTokenSchema);
+export const RefreshToken = DB.model('RefreshToken', RefreshTokenSchema);

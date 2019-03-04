@@ -3,7 +3,7 @@ import { AuthenticationError } from 'apollo-server-core';
 import { combineResolvers } from 'graphql-resolvers';
 import _ from 'lodash';
 import { JWThelper } from '../helpers/jwt.helper';
-import { getDirFileContents } from '../utils/tools';
+import { getDirFileContents } from './utils/tools';
 
 export const typeDefs = getDirFileContents(`${__dirname}/gql`, '.gql').join();
 
@@ -31,13 +31,13 @@ const isAuthenticated = async (root, args, { authInfo: { token } }, info) => {
  */
 function combineWithAuthResolver(
   objValue,
-  srcValue: { _unauthorizedAccess: string[] },
+  srcValue: { _unauthorizedAccess: string[] }
 ) {
-  Object.keys(objValue).forEach(resolverName => {
+  Object.keys(objValue).forEach((resolverName) => {
     if (!srcValue._unauthorizedAccess.includes(resolverName)) {
       objValue[resolverName] = combineResolvers(
         isAuthenticated,
-        objValue[resolverName],
+        objValue[resolverName]
       );
     }
   });
@@ -48,7 +48,7 @@ function combineWithAuthResolver(
 export const resolvers = _.mergeWith(
   Resolvers,
   {
-    AccessMutation: { _unauthorizedAccess: ['auth_local','registartion'] },
+    AccessMutation: { _unauthorizedAccess: ['auth_local', 'registartion'] }
   },
-  combineWithAuthResolver,
+  combineWithAuthResolver
 );

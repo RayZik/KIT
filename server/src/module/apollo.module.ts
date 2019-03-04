@@ -3,8 +3,8 @@ import {
   makeExecutableSchema,
   SchemaDirectiveVisitor
 } from 'apollo-server-express';
-import { typeDefs, resolvers } from '../../api';
-import { schemaDirectives } from '../../api/directives';
+import { typeDefs, resolvers } from '../api';
+import { schemaDirectives } from '../api/directives';
 import { GraphQLFormattedError } from 'graphql';
 
 /**
@@ -12,6 +12,7 @@ import { GraphQLFormattedError } from 'graphql';
  */
 export default class ApolloBuilderClass {
   private _app;
+  private _path = '/api';
 
   constructor(app: Express.Application) {
     this._app = app;
@@ -41,7 +42,10 @@ export default class ApolloBuilderClass {
       formatError: this.formatErrorFn
     };
 
-    new ApolloServer(config).applyMiddleware({ app: this._app });
+    new ApolloServer(config).applyMiddleware({
+      app: this._app,
+      path: this._path
+    });
 
     SchemaDirectiveVisitor.visitSchemaDirectives(schema, schemaDirectives);
   }

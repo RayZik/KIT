@@ -1,5 +1,5 @@
 import { IAuthInfo } from 'interface';
-import { AuthService } from '../../../main/service';
+import { getRegistration } from './access.functions';
 
 /**
  * Login function
@@ -7,5 +7,5 @@ import { AuthService } from '../../../main/service';
  * @param password - user password
  */
 export async function registration(ctx, params): Promise<IAuthInfo> {
-  return await AuthService.getRegistration(params);
+  return await getRegistration(params);
 }

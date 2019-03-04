@@ -40,7 +40,7 @@ class App {
     this.app.use(PublicRouter);
 
     this.app.use((req: Request, res: Response, next: NextFunction) => {
-      res.redirect('/graphql');
+      res.redirect('/api');
     });
 
     this.app.use((req: Request, res: Response, next: NextFunction) => {
