@@ -3,8 +3,8 @@ import {
   makeExecutableSchema,
   SchemaDirectiveVisitor
 } from 'apollo-server-express';
-import { typeDefs, resolvers } from '../api';
-import { schemaDirectives } from '../api/directives';
+import { typeDefs, resolvers } from './api';
+import { schemaDirectives } from './api/directives';
 import { GraphQLFormattedError } from 'graphql';
 
 /**

@@ -3,7 +3,7 @@ import express, {
   Request,
   Response,
   NextFunction,
-  static as ExpressStatic,
+  static as expressStatic,
   Application
 } from 'express';
 import cookieParser from 'cookie-parser';
@@ -12,7 +12,7 @@ import bodyParser from 'body-parser';
 import path from 'path';
 
 import { PublicRouter } from './routes';
-import { ApolloBuilderClass } from './module/apollo.module';
+import { ApolloBuilderClass } from './apollo-builder.class';
 
 /**
  * Application server class
@@ -30,7 +30,7 @@ class App {
    * Express setter
    */
   setConfig() {
-    this.app.use(ExpressStatic(path.join(__dirname, 'public/client/dist')));
+    this.app.use(expressStatic(path.join(__dirname, 'public/client/dist')));
     this.app.use(cookieParser());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
