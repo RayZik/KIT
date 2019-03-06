@@ -1,7 +1,8 @@
 import {
   ApolloServer,
   makeExecutableSchema,
-  SchemaDirectiveVisitor
+  SchemaDirectiveVisitor,
+  ApolloServerExpressConfig
 } from 'apollo-server-express';
 import { typeDefs, resolvers } from './api';
 import { schemaDirectives } from './api/directives';
@@ -25,7 +26,7 @@ export default class ApolloBuilderClass {
   setApollo() {
     const schema = makeExecutableSchema({ typeDefs: [typeDefs], resolvers });
 
-    const config = {
+    const config: ApolloServerExpressConfig = {
       schema,
       context: ({ req }) => {
         const {
@@ -39,7 +40,8 @@ export default class ApolloBuilderClass {
         };
       },
       formatResponse: this.formatResponseFn,
-      formatError: this.formatErrorFn
+      formatError: this.formatErrorFn,
+      tracing: true
     };
 
     new ApolloServer(config).applyMiddleware({
