@@ -1,2 +1,2 @@
-export * from './user.fn';
-export * from './token.fn';
+export * from './user.class';
+export * from './token.class';
