@@ -3,11 +3,18 @@ type UserQuery {
 }
 
 type UserMutation {
-  set(user_param: UserParam__Input!): User!
+  set(user_param: UserParamSet__Input!): User!
+  create(user_param: UserParamCreate__Input!): User!
 }
 
-input UserParam__Input {
+input UserParamSet__Input {
   name: String!
+}
+
+input UserParamCreate__Input {
+  email: String!
+  name: String
+  password: String!
 }
 
 type User {

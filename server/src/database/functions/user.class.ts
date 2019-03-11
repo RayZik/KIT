@@ -55,7 +55,7 @@ export class UserClass {
 
   static async set(id: string, params: { [prop: string]: any }) {
     try {
-      const user = await User.findByIdAndUpdate(id, params, { new: true });
+      const user = await User.findOneAndUpdate(id, params, { new: true });
 
       if (!_.isNil(user)) {
         return user;
@@ -74,18 +74,20 @@ export class UserClass {
 
   static async get(params: { [prop: string]: any }) {
     try {
-      const user = await User.findOne(params);
-
-      if (!_.isNil(user)) {
-        return user;
-      } else {
-        /** @todo заменить на общий механизм ошибок */
-        throw new DBError({
-          message: 'User not found',
-          name: 'user',
-          type: 'not_found'
-        });
+      let user = undefined;
+      if (Object.keys(params).length > 0) {
+        user = await User.findOne(params);
+        if (!_.isNil(user)) {
+          return user;
+        }
       }
+
+      /** @todo заменить на общий механизм ошибок */
+      throw new DBError({
+        message: 'User not found',
+        name: 'user',
+        type: 'not_found'
+      });
     } catch (error) {
       throw new DBError(error);
     }
