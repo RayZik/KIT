@@ -21,12 +21,3 @@ export function editUser(ctx: IAuthContext, params) {
     params
   });
 }
-
-/**
- * Create user
- * @param ctx - auth context
- * @param param - params for create user
- */
-export function createUser(ctx: IAuthContext, params) {
-  return service('UserClass', 'create', ctx, { params });
-}
