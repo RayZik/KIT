@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "src/database",
+    "rootDir": "src/database"
+  },
+  "include": ["src/database"]
+}

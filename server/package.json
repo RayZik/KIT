@@ -11,7 +11,8 @@
     "dev:server": "NODE_PATH=src NODE_ENV=development tsc -w",
     "dev:start": "bash ./scripts/dev-server-starter.sh",
     "build": "rm -Rf ./dist && tsc && npm run copy:api",
-    "deploy": "npm run build &&  node ./scripts/.ghpages server"
+    "deploy": "npm run build &&  node ./scripts/.ghpages server",
+    "generate":"npx dts-generator --name db_module --main database   --project ./tsconfig-gen.json --out ./src/types/service.d.ts"
   },
   "engines": {
     "node": "8.11.3",
@@ -47,8 +48,9 @@
     "@types/mongoose": "5.3.11",
     "@types/node": "10.12.5",
     "@types/uuid": "^3.4.4",
-    "cpx": "1.5.0",
     "concurrently": "4.1.0",
+    "cpx": "1.5.0",
+    "dts-generator": "^3.0.0",
     "gh-pages": "2.0.1",
     "lodash": "4.17.11",
     "nodemon": "1.18.10",
