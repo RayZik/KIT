@@ -4,41 +4,6 @@ import uuid from 'uuid';
 import { RefreshToken } from '../models';
 import { JWThelper } from '../../helpers/jwt.helper';
 
-/**
- * Method for issue and set new refresh token
- * @param user_id - user id
- * @param refresh_token - custom refresh token (uuid by default)
- * @deprecated
- */
-function issueAndSetRefreshToken(
-  user_id: string,
-  refresh_token: string = uuid()
-) {
-  return TokenClass.issueAndSetRefreshToken(user_id, refresh_token);
-}
-
-/**
- * Method for remove refresh token
- * @param user_id - user id
- * @deprecated
- */
-function removeRefreshToken(user_id: string) {
-  return TokenClass.removeRefreshToken(user_id);
-}
-
-/**
- * Method for validation refresh token
- * @param token - access token
- * @param refresh_token - refresh token
- * @deprecated
- */
-function checkValidRefreshToken(
-  token: string,
-  refresh_token: string
-): Promise<string> {
-  return TokenClass.checkValidRefreshToken(token, refresh_token);
-}
-
 export class TokenClass {
   /**
    * Method for issue and set new refresh token
@@ -115,9 +80,3 @@ export class TokenClass {
     });
   }
 }
-
-export const TokenFn = {
-  issueAndSetRefreshToken,
-  checkValidRefreshToken,
-  removeRefreshToken
-};

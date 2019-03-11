@@ -3,39 +3,6 @@ import _ from 'lodash';
 import { User } from '../models/user';
 import { DBError } from '../../api/error';
 
-/**
- * Method for get user by params
- * @param params - params for search user
- */
-async function GetUser(params: { [prop: string]: any }) {
-  return UserClass.get(params);
-}
-
-/**
- * Method for set user param
- * @param id user id
- * @param params - params for search user
- * @@deprecated
- */
-async function SetUser(id: string, params: { [prop: string]: any }) {
-  return UserClass.set(id, params);
-}
-
-/**
- * Method for set user param
- * @param id user id
- * @param params - params for search user
- * @deprecated
- */
-function CreateUser(params) {
-  return UserClass.create(params);
-}
-
-export const UserFn = {
-  GetUser,
-  CreateUser,
-  SetUser
-};
 
 export class UserClass {
   static create(params) {
