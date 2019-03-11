@@ -5,8 +5,6 @@ export default {
     get: (obj, args, ctx, info) => getUser(ctx)
   },
   UserMutation: {
-    set: (obj, { user_param }, ctx, info) => {
-      return editUser(ctx, user_param);
-    }
+    set: (obj, { user_param }, ctx, info) => editUser(ctx, user_param)
   }
 };

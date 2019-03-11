@@ -1,13 +1,13 @@
 import { getUserIdFromCtx } from '../../utils/tools';
-import { UserFn } from '../../../database';
 import { IAuthContext } from 'interface';
+import { service } from '../../service';
 
 /**
  * Get user
  * @param ctx - auth context
  */
-export async function getUser(ctx: IAuthContext) {
-  return await UserFn.GetUser({ _id: getUserIdFromCtx(ctx) });
+export function getUser(ctx: IAuthContext) {
+  return service('UserClass', 'get', ctx, { _id: getUserIdFromCtx(ctx) });
 }
 
 /**
@@ -15,6 +15,9 @@ export async function getUser(ctx: IAuthContext) {
  * @param ctx - auth context
  * @param param - params for edit user
  */
-export async function editUser(ctx: IAuthContext, param) {
-  return await UserFn.SetUser(getUserIdFromCtx(ctx), param);
+export function editUser(ctx: IAuthContext, params) {
+  return service('UserClass', 'set', ctx, {
+    id: getUserIdFromCtx(ctx),
+    params
+  });
 }

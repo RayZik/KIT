@@ -1,4 +1,4 @@
-import { UserFn, TokenFn } from '../../../database';
+import { TokenClass, UserClass } from '../../../database';
 import { DBError } from '../../error';
 
 /**
@@ -7,7 +7,7 @@ import { DBError } from '../../error';
  * @param password - user password
  */
 export async function getLogin(email: string, password: string): Promise<any> {
-  const user = await UserFn.GetUser({ email });
+  const user = await UserClass.get({ email });
   if (!user || !user.validatePassword(password)) {
     throw new DBError({
       message: 'not valid',
@@ -25,7 +25,7 @@ export async function getLogin(email: string, password: string): Promise<any> {
  * @param password - user password
  */
 export async function getRegistration(params) {
-  const data = (await UserFn.CreateUser(params)) as any;
+  const data = (await UserClass.create(params)) as any;
 
   return data.toAuthJSON();
 }
@@ -39,11 +39,14 @@ export async function issueNewTokenByRefresh(
   token: string,
   refresh_token: string
 ) {
-  const userId = await TokenFn.checkValidRefreshToken(token, refresh_token);
+  const userId = await TokenClass.checkValidRefreshToken({
+    token,
+    refresh_token
+  });
 
   return Promise.all([
-    UserFn.GetUser({ _id: userId }),
-    TokenFn.removeRefreshToken(userId)
+    UserClass.get({ _id: userId }),
+    TokenClass.removeRefreshToken({ user_id: userId })
   ])
     .then((values) => values[0].toAuthJSON())
     .catch((error) => error);

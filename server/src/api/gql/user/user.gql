@@ -3,10 +3,10 @@ type UserQuery {
 }
 
 type UserMutation {
-  set(user_param: UserParam__Input!): User!
+  set(user_param: UserParamSet__Input!): User!
 }
 
-input UserParam__Input {
+input UserParamSet__Input {
   name: String!
 }
 

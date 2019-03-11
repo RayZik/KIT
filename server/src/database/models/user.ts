@@ -1,8 +1,8 @@
 import crypto from 'crypto';
-import { Schema, Model, Document, model } from 'mongoose';
+import { Schema, Model, Document } from 'mongoose';
 
 import { IAuthInfo } from 'interface';
-import { TokenFn } from '../functions';
+import { TokenClass } from '../functions';
 import { JWThelper } from '../../helpers/jwt.helper';
 import { DB } from '../db.class';
 
@@ -64,7 +64,7 @@ UserSchema.methods.toAuthJSON = async function() {
   return {
     auth: {
       token: JWThelper.issueToken(user),
-      refresh_token: await TokenFn.issueAndSetRefreshToken(this._id)
+      refresh_token: await TokenClass.issueAndSetRefreshToken(this._id)
     },
     user
   } as IAuthInfo;
@@ -87,12 +87,3 @@ function hashPassword(password: string, salt: string) {
 }
 
 export const User: Model<IUserModel> = DB.model('User', UserSchema);
-
-// const user = new User({
-//   email: '123',
-//   name: '123',
-//   avatar_url: 'rewrwe',
-//   password: '123'
-// })
-
-// user.save()
