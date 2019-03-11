@@ -17,7 +17,7 @@ export function getUser(ctx: IAuthContext) {
  */
 export function editUser(ctx: IAuthContext, params) {
   return service('UserClass', 'set', ctx, {
-    _id: getUserIdFromCtx(ctx),
+    id: getUserIdFromCtx(ctx),
     params
   });
 }
