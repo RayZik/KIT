@@ -20,7 +20,7 @@ function issueToken(params, options = { expiresIn: '15m' }) {
  *
  * @param jwtToken
  */
-function verifyJWT(jwtToken: string = '') {
+function verifyJWT(jwtToken: string) {
   return new Promise((resolve, reject) => {
     verify(jwtToken, 'secret', {}, (err, decode) =>
       err ? reject(err) : resolve(decode)

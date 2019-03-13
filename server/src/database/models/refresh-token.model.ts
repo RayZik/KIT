@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { Schema, Model } from 'mongoose';
 import { DB } from '../db.class';
 
 /**
@@ -14,4 +14,7 @@ const RefreshTokenSchema = new Schema({
   }
 });
 
-export const RefreshToken = DB.model('RefreshToken', RefreshTokenSchema);
+export const RefreshTokenModel: Model<any> = DB.model(
+  'RefreshToken',
+  RefreshTokenSchema
+);

@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { Schema, Model, Document } from 'mongoose';
 
 import { IAuthInfo } from 'interface';
-import { TokenClass } from '../functions';
+import { JWT } from '../controllers';
 import { JWThelper } from '../../helpers/jwt.helper';
 import { DB } from '../db.class';
 
@@ -64,7 +64,7 @@ UserSchema.methods.toAuthJSON = async function() {
   return {
     auth: {
       token: JWThelper.issueToken(user),
-      refresh_token: await TokenClass.issueAndSetRefreshToken(this._id)
+      refresh_token: await JWT.issueAndSetRefreshToken({ user_id: this._id })
     },
     user
   } as IAuthInfo;
@@ -86,4 +86,4 @@ function hashPassword(password: string, salt: string) {
     .toString('hex');
 }
 
-export const User: Model<IUserModel> = DB.model('User', UserSchema);
+export const UserModel: Model<IUserModel> = DB.model('User', UserSchema);

@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import uuid from 'uuid';
 
-import { RefreshToken } from '../models';
+import { RefreshTokenModel } from '../models';
 import { JWThelper } from '../../helpers/jwt.helper';
 
-export class TokenClass {
+export class JWT {
   /**
    * Method for issue and set new refresh token
    * @param user_id - user id
@@ -15,17 +15,17 @@ export class TokenClass {
     refresh_token = uuid()
   }: {
     user_id: string;
-    refresh_token: string;
+    refresh_token?: string;
   }) {
     return new Promise((resolve, reject) => {
-      RefreshToken.findOne({ user_id }).then((data) => {
+      RefreshTokenModel.findOne({ user_id }).then((data) => {
         const currentRefreshToken = _.get(data, 'refresh_token', undefined);
 
         if (!_.isNil(currentRefreshToken)) {
           resolve(currentRefreshToken);
         } else {
           // make a new refresh token for user
-          const issueRefreshToken = new RefreshToken({
+          const issueRefreshToken = new RefreshTokenModel({
             user_id,
             refresh_token
           });
@@ -48,7 +48,7 @@ export class TokenClass {
    */
   static removeRefreshToken({ user_id }: { user_id: string }) {
     return new Promise((resolve, reject) => {
-      RefreshToken.findOneAndDelete(user_id)
+      RefreshTokenModel.findOneAndDelete({ user_id })
         .then((data) => {
           resolve(data);
         })
@@ -71,14 +71,15 @@ export class TokenClass {
     return new Promise((resolve, reject) => {
       const { id: user_id } = JWThelper.decodeToken(token);
 
-      RefreshToken.findOne({ user_id })
-        .then((tokenDoc: string) => {
+      RefreshTokenModel.findOne({ user_id })
+        .then((tokenDoc) => {
           if (
             !_.isNil(tokenDoc) &&
             _.get(tokenDoc, 'refresh_token', undefined) === refresh_token
           ) {
             resolve(user_id);
           } else {
+            /**@todo */
             reject(new Error('Refresh token not valid'));
           }
         })
