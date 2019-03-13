@@ -2,7 +2,6 @@ import _ from 'lodash';
 
 import { UserModel } from '../models/user.model';
 import { DBError } from '../../api/error';
-import { AuthChecker } from '../decorators';
 
 export class User {
   static create({ params }: { params: any }) {
@@ -20,7 +19,6 @@ export class User {
     });
   }
 
-  @AuthChecker()
   static async set({
     id,
     params
@@ -53,7 +51,6 @@ export class User {
    * @param params - params to find a user
    * @todo - https://github.com/mralexrabota/KIT/projects/1#card-18752391
    */
-  @AuthChecker()
   static async get(params: { _id?: string; email?: string }) {
     try {
       let user = undefined;
