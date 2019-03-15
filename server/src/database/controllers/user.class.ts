@@ -1,7 +1,4 @@
 import _ from 'lodash';
-
-import { UserModel, IUserModel } from '../models/user.model';
-import { DBError } from '../../api/error';
 import { AuthChecker } from '../decorators';
 import { IAuthContext } from 'interface';
 import { GET_USER, SET_USER } from '../functions';
