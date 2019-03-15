@@ -1,6 +1,7 @@
 import { IAuthContext } from 'interface';
 import { JWThelper } from '../../helpers/jwt.helper';
 import _ from 'lodash';
+import { SError } from '../error';
 
 /**
  * Decorator for checking an auth object and verifing a token
@@ -12,13 +13,11 @@ export function AuthChecker() {
       value: async function(...args: any[]) {
         const ctx: IAuthContext = args[1];
         const func: Function = descriptor.value;
+        const token = ctx.token;
         console.log('[AuthChecker.name]', key);
         console.log('[AuthChecker.ctx]', ctx);
 
-        if (ctx.authInfo === null) {
-          return func.apply(this, args);
-        } else {
-          const token = _.get(ctx, 'authInfo.token');
+        if (token !== undefined) {
           const isVerified = token
             ? await JWThelper.verifyJWT(token)
             : undefined;
@@ -28,7 +27,7 @@ export function AuthChecker() {
           }
         }
 
-        throw new Error("Refresh token isn't valid");
+        throw new SError('Access is denied');
       }
     };
   };

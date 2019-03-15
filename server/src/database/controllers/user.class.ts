@@ -6,9 +6,9 @@ import { getUserIdFromCtx } from '../../api/utils/tools';
 
 export class User {
   /**
-   *
-   * @param req
-   * @param ctx
+   * Method for setting params of user
+   * @param req - params of user
+   * @param ctx - auth context
    */
   @AuthChecker()
   static async set(
@@ -21,10 +21,18 @@ export class User {
   /**
    * Controller for getting a user by params
    * @param params - params to find a user
-   * @todo - https://github.com/mralexrabota/KIT/projects/1#card-18752391
+   * @todo - https://github.com/mralexrabota/KIT/projects/1#card-18752391 serice option types
    */
   @AuthChecker()
-  static async get(params: { _id?: string; email?: string }): Promise<any> {
+  static async get(
+    params: { _id?: string; email?: string },
+    ctx: IAuthContext
+  ): Promise<any> {
+    // set id from ctx by default
+    if (Object.keys(params).length === 0) {
+      params._id = getUserIdFromCtx(ctx);
+    }
+
     return GET_USER(params);
   }
 }

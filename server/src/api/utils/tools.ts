@@ -42,11 +42,11 @@ export function getDirFileContents(
 }
 
 /**
- * Handler for get user id from context
+ * Handler for getting a user's id from context
  * @param ctx - context
  */
 export function getUserIdFromCtx(ctx: IAuthContext) {
-  const token = _.get(ctx, 'authInfo.token', '');
+  const { token } = ctx;
   if (token) {
     const { id } = JWThelper.decodeToken(token);
     return id;

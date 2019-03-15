@@ -25,7 +25,6 @@ export interface IAuth {
 }
 
 export interface IAuthContext {
-  authInfo: {
-    token: string;
-  };
+  token: string;
+  external_ip?: string;
 }

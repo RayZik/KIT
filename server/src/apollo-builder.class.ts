@@ -7,6 +7,7 @@ import {
 import { typeDefs, resolvers } from './api';
 import { schemaDirectives } from './api/directives';
 import { GraphQLFormattedError } from 'graphql';
+import { IAuthContext } from 'interface';
 
 /**
  *
@@ -28,15 +29,13 @@ export default class ApolloBuilderClass {
 
     const config: ApolloServerExpressConfig = {
       schema,
-      context: ({ req }) => {
+      context: ({ req }): IAuthContext => {
         const {
           headers: { authorization }
         } = req;
 
         return {
-          authInfo: {
-            token: authorization
-          }
+          token: authorization
         };
       },
       formatResponse: this.formatResponseFn,

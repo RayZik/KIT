@@ -44,10 +44,8 @@ export class JWT {
    * @param ctx
    */
   static async refreshToken(req: { refresh_token: string }, ctx: IAuthContext) {
-    const { token } = ctx.authInfo;
-    let a = await REFRESH_TOKEN(token, req.refresh_token);
-    console.log(a);
-    
-    return a;
+    const { token } = ctx;
+
+    return await REFRESH_TOKEN(token, req.refresh_token);
   }
 }

@@ -4,6 +4,7 @@ import { combineResolvers } from 'graphql-resolvers';
 import _ from 'lodash';
 import { JWThelper } from '../helpers/jwt.helper';
 import { getDirFileContents } from './utils/tools';
+import { IAuthContext } from 'interface';
 
 export const typeDefs = getDirFileContents(`${__dirname}/gql`, '.gql').join();
 
@@ -11,7 +12,8 @@ export const typeDefs = getDirFileContents(`${__dirname}/gql`, '.gql').join();
  * The utility resolver to check access
  * Throw error if an unauthenticated user requests a resolver accessed only for authenticated users
  */
-const isAuthenticated = async (root, args, { authInfo: { token } }, info) => {
+const isAuthenticated = async (root, args, ctx: IAuthContext, info) => {
+  const { token } = ctx;
   if (!token) {
     throw new AuthenticationError('Not authenticated');
   } else {
