@@ -16,12 +16,12 @@ interface IUser {
 
 interface IUserSchema extends IUser, Schema {
   validatePassword(password: string): boolean;
-  toAuthJSON(): void;
+  toAuthJSON(): Promise<IAuthInfo>;
 }
 
-interface IUserModel extends IUser, Document {
+export interface IUserModel extends IUser, Document {
   validatePassword(password: string): boolean;
-  toAuthJSON(): void;
+  toAuthJSON(): Promise<IAuthInfo>;
 }
 
 /**
@@ -67,7 +67,7 @@ UserSchema.methods.toAuthJSON = async function() {
       refresh_token: await JWT.issueAndSetRefreshToken({ user_id: this._id })
     },
     user
-  } as IAuthInfo;
+  };
 };
 
 UserSchema.pre('save', function(next, doks) {
