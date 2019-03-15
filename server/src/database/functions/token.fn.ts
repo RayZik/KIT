@@ -3,6 +3,7 @@ import { GET_USER } from './user.fn';
 import { RefreshTokenModel } from '../models';
 import { JWThelper } from '../../helpers/jwt.helper';
 import uuid = require('uuid');
+import { SError } from '../error';
 
 export async function REFRESH_TOKEN(token: string, refresh_token: string) {
   const user_id = await VALIDATE_REFRESH_TOKEN(token, refresh_token);
@@ -14,7 +15,7 @@ export async function REFRESH_TOKEN(token: string, refresh_token: string) {
 
     return values[0].toAuthJSON();
   } catch (error) {
-    throw new Error(error);
+    throw new SError(error);
   }
 }
 
@@ -22,7 +23,7 @@ export async function REMOVE_REFRESH_TOKEN(user_id: string) {
   try {
     return await RefreshTokenModel.findOneAndDelete({ user_id });
   } catch (error) {
-    throw new Error(error);
+    throw new SError(error);
   }
 }
 
@@ -40,10 +41,10 @@ export async function VALIDATE_REFRESH_TOKEN(
       return user_id;
     } else {
       /**@todo */
-      throw new Error('Refresh token not valid');
+      throw new SError('Refresh token not valid');
     }
   } catch (error) {
-    throw new Error(error);
+    throw new SError(error);
   }
 }
 
@@ -70,6 +71,6 @@ export async function ISSUE_AND_SET_REFRESH_TOKEN(user_id: string) {
 
     return currentRefreshToken;
   } catch (error) {
-    throw new Error(error);
+    throw new SError(error);
   }
 }
