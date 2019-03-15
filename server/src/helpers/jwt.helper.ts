@@ -12,8 +12,8 @@ function decodeToken(token: string): { id: string } {
  * @todo Доделать
  * @param id
  */
-function issueToken(params, options = { expiresIn: '15m' }) {
-  return sign({ ...params }, 'secret', options);
+function issueToken(id, options = { expiresIn: '15m' }) {
+  return sign({ id }, 'secret', options);
 }
 
 /**

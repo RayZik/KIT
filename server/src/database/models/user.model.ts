@@ -63,7 +63,7 @@ UserSchema.methods.toAuthJSON = async function() {
 
   return {
     auth: {
-      token: JWThelper.issueToken(user),
+      token: JWThelper.issueToken(this._id),
       refresh_token: await JWT.issueAndSetRefreshToken({ user_id: this._id })
     },
     user

@@ -1,5 +1,10 @@
-import { Schema, Model } from 'mongoose';
+import { Schema, Model, Document } from 'mongoose';
 import { DB } from '../db.class';
+
+export interface IRefreshTokenModel extends Document {
+  user_id: string;
+  refresh_token: string;
+}
 
 /**
  * Refresh token model
@@ -14,7 +19,7 @@ const RefreshTokenSchema = new Schema({
   }
 });
 
-export const RefreshTokenModel: Model<any> = DB.model(
+export const RefreshTokenModel: Model<IRefreshTokenModel> = DB.model(
   'RefreshToken',
   RefreshTokenSchema
 );
