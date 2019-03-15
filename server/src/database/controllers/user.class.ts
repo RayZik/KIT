@@ -1,74 +1,30 @@
 import _ from 'lodash';
-
-import { UserModel } from '../models/user.model';
-import { DBError } from '../../api/error';
+import { AuthChecker } from '../decorators';
+import { IAuthContext } from 'interface';
+import { GET_USER, SET_USER } from '../functions';
+import { getUserIdFromCtx } from '../../api/utils/tools';
 
 export class User {
-  static create({ params }: { params: any }) {
-    const newUser = new UserModel(params);
-    return new Promise((resolve, reject) => {
-      newUser.save((error, data) => {
-        if (error) {
-          reject(
-            new DBError({ message: 'User exist', name: 'user', type: 'exist' })
-          );
-        } else {
-          resolve(data);
-        }
-      });
-    });
-  }
-
-  static async set({
-    id,
-    params
-  }: {
-    id: string;
-    params: { [prop: string]: any };
-  }) {
-    try {
-      const user = await UserModel.findOneAndUpdate(id, params, {
-        new: true
-      });
-
-      if (!_.isNil(user)) {
-        return user;
-      } else {
-        /** @todo заменить на общий механизм ошибок */
-        throw new DBError({
-          message: 'User not found',
-          name: 'user',
-          type: 'not_found'
-        });
-      }
-    } catch (error) {
-      throw new DBError(error);
-    }
+  /**
+   *
+   * @param req
+   * @param ctx
+   */
+  @AuthChecker()
+  static async set(
+    req: { params: { [prop: string]: any } },
+    ctx: IAuthContext
+  ) {
+    return SET_USER(getUserIdFromCtx(ctx), req.params);
   }
 
   /**
-   * Func to get user by params
+   * Controller for getting a user by params
    * @param params - params to find a user
    * @todo - https://github.com/mralexrabota/KIT/projects/1#card-18752391
    */
-  static async get(params: { _id?: string; email?: string }) {
-    try {
-      let user = undefined;
-      if (Object.keys(params).length > 0) {
-        user = await UserModel.findOne(params);
-        if (!_.isNil(user)) {
-          return user;
-        }
-      }
-
-      /** @todo заменить на общий механизм ошибок */
-      throw new DBError({
-        message: 'User not found',
-        name: 'user',
-        type: 'not_found'
-      });
-    } catch (error) {
-      throw new DBError(error);
-    }
+  @AuthChecker()
+  static async get(params: { _id?: string; email?: string }): Promise<any> {
+    return GET_USER(params);
   }
 }

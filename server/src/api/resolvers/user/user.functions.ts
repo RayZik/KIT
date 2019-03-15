@@ -7,7 +7,7 @@ import { service } from '../../service';
  * @param ctx - auth context
  */
 export function getUser(ctx: IAuthContext) {
-  return service('User', 'get', ctx, { _id: getUserIdFromCtx(ctx) });
+  return service(ctx, 'User', 'get', { _id: getUserIdFromCtx(ctx) });
 }
 
 /**
@@ -16,7 +16,7 @@ export function getUser(ctx: IAuthContext) {
  * @param param - params for edit user
  */
 export function editUser(ctx: IAuthContext, params) {
-  return service('User', 'set', ctx, {
+  return service(ctx, 'User', 'set', {
     id: getUserIdFromCtx(ctx),
     params
   });
