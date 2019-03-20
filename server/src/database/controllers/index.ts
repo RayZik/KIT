@@ -1,13 +1,13 @@
-import { User } from './user.class';
-import { JWT } from './token.class';
-import { Access } from './access.class';
+import { UserController } from './user.class';
+import { JWTController } from './token.class';
+import { AccessController } from './access.class';
 
 export * from './user.class';
 export * from './token.class';
 export * from './access.class';
 
 export default {
-  User,
-  JWT,
-  Access
+  user: UserController,
+  jwt: JWTController,
+  access: AccessController
 };

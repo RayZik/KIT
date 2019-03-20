@@ -8,7 +8,7 @@ import {
   ISSUE_AND_SET_REFRESH_TOKEN
 } from '../functions/token.fn';
 
-export class JWT {
+export class JWTController {
   /**
    * Method for issue and set new refresh token
    * @param user_id - user id

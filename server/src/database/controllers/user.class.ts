@@ -4,7 +4,7 @@ import { IAuthContext } from 'interface';
 import { GET_USER, SET_USER } from '../functions';
 import { getUserIdFromCtx } from '../../api/utils/tools';
 
-export class User {
+export class UserController {
   /**
    * Method for setting params of user
    * @param req - params of user

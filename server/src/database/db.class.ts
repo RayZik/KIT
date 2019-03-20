@@ -16,15 +16,15 @@ class DBClass {
     });
   }
 
-  model(name: string, schema: Schema) {
-    return DBClass.connection.model(name, schema);
-  }
-
   private _getDB() {
     (<any>mongoose).Promise = Promise;
     return mongoose.createConnection(this._MONGO_URI, {
       useNewUrlParser: true
     });
+  }
+
+  model(name: string, schema: Schema) {
+    return DBClass.connection.model(name, schema);
   }
 }
 

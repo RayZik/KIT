@@ -4,10 +4,10 @@ import { service } from '../../../api/service';
 export default _.merge({
   AccessMutation: {
     auth_local: (obj, { email, password }, ctx, info) =>
-      service(ctx, 'Access', 'login', { email, password }),
+      service(ctx, 'access', 'login', { email, password }),
     refresh_token: (obj, { refresh_token }, ctx, info) =>
-      service(ctx, 'JWT', 'refreshToken', { refresh_token }),
+      service(ctx, 'jwt', 'refreshToken', { refresh_token }),
     registartion: (obj, { params }, ctx, info) =>
-      service(ctx, 'Access', 'register', { ...params })
+      service(ctx, 'access', 'register', { ...params })
   }
 });

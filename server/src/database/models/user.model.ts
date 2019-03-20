@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { Schema, Model, Document } from 'mongoose';
 
 import { IAuthInfo } from 'interface';
-import { JWT } from '../controllers';
+import { JWTController } from '../controllers';
 import { JWThelper } from '../../helpers/jwt.helper';
 import { DB } from '../db.class';
 
@@ -64,7 +64,7 @@ UserSchema.methods.toAuthJSON = async function() {
   return {
     auth: {
       token: JWThelper.issueToken(this._id),
-      refresh_token: await JWT.issueAndSetRefreshToken({ user_id: this._id })
+      refresh_token: await JWTController.issueAndSetRefreshToken({ user_id: this._id })
     },
     user
   };
@@ -80,6 +80,11 @@ UserSchema.pre('save', function(next, doks) {
   next();
 });
 
+/**
+ * Funtion for hashing password
+ * @param password - current password
+ * @param salt - the salt for hashing password
+ */
 function hashPassword(password: string, salt: string) {
   return crypto
     .pbkdf2Sync(password, salt, 10000, 512, 'sha512')

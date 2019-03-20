@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { GET_USER, CREATE_USER } from '../functions';
 import { SError } from '../error';
 
-export class Access {
+export class AccessController {
   static async login(req: { email: string; password: string }) {
     const { email, password } = req;
     const user = await GET_USER({ email });
