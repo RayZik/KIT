@@ -1,8 +1,8 @@
-type UserQuery {
+type UserQueries {
   get: User!
 }
 
-type UserMutation {
+type UserMutations {
   set(user_param: UserParamSet__Input!): User!
 }
 

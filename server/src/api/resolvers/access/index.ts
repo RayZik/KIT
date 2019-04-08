@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { service } from '../../../api/service';
 
 export default _.merge({
-  AccessMutation: {
+  AccessMutations: {
     auth_local: (obj, { email, password }, ctx, info) =>
       service(ctx, 'access', 'login', { email, password }),
     refresh_token: (obj, { refresh_token }, ctx, info) =>

@@ -1,0 +1,7 @@
+type AccountQueries {
+  user: UserQueries
+}
+
+type AccountMutations {
+  user: UserMutations
+}

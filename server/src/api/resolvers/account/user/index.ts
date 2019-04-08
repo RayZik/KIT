@@ -1,10 +1,10 @@
-import { service } from '../../service';
+import { service } from '../../../service';
 
 export default {
-  UserQuery: {
+  UserQueries: {
     get: (obj, args, ctx, info) => service(ctx, 'user', 'get', {})
   },
-  UserMutation: {
+  UserMutations: {
     set: (obj, { user_param }, ctx, info) =>
       service(ctx, 'user', 'set', { params: user_param })
   }

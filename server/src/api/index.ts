@@ -50,7 +50,7 @@ function combineWithAuthResolver(
 export const resolvers = _.mergeWith(
   Resolvers,
   {
-    AccessMutation: { _unauthorizedAccess: ['auth_local', 'registartion'] }
+    AccessMutations: { _unauthorizedAccess: ['auth_local', 'registartion'] }
   },
   combineWithAuthResolver
 );

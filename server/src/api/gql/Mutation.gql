@@ -1,4 +1,4 @@
 type Mutation {
-  access: AccessMutation!
-  user: UserMutation!
+  access: AccessMutations!
+  account: AccountMutations!
 }
