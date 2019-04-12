@@ -8,6 +8,7 @@ export async function GET_USER(params: {
 }): Promise<IUserModel> {
   try {
     let user = undefined;
+    
     if (Object.keys(params).length > 0) {
       user = await UserModel.findOne(params);
 
