@@ -13,6 +13,7 @@ import path from 'path';
 
 import { PublicRouter } from './routes';
 import { ApolloBuilderClass } from './apollo-builder.class';
+import { express as voyagerMiddleware } from 'graphql-voyager/middleware';
 
 /**
  * Application server class
@@ -21,6 +22,7 @@ class App {
   /** instance of a app express */
   public app: Application = express();
   public router: Router = Router();
+  public apiPath = '/api';
 
   constructor() {
     this.setConfig();
@@ -38,9 +40,9 @@ class App {
     // routes
     new ApolloBuilderClass(this.app);
     this.app.use(PublicRouter);
-
+    this.app.use('/voyager', voyagerMiddleware({ endpointUrl: this.apiPath }));
     this.app.use((req: Request, res: Response, next: NextFunction) => {
-      res.redirect('/api');
+      res.redirect(this.apiPath);
     });
 
     this.app.use((req: Request, res: Response, next: NextFunction) => {

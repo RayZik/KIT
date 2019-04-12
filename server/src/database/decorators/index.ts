@@ -1,7 +1,7 @@
-import { IAuthContext } from 'interface';
 import { JWThelper } from '../../helpers/jwt.helper';
 import _ from 'lodash';
 import { SError } from '../error';
+import { IAuthContext } from 'interface';
 
 /**
  * Decorator for checking an auth object and verifing a token

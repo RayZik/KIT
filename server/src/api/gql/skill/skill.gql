@@ -1,5 +1,0 @@
-type ProjectItem {
-  id: ID
-  name: String
-  description: String
-}

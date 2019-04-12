@@ -1,18 +1,24 @@
 import _ from 'lodash';
 import AccountResolver from './account';
+import DocumentResolver from './document';
 import AccessResolver from './access';
+import ListResolver from './list';
 
 export default _.merge(
   {
     JSON: () => ({}),
     Mutation: {
       account: () => ({}),
-      access: () => ({})
+      access: () => ({}),
+      document: () => ({})
     },
     Query: {
-      account: () => ({})
+      account: () => ({}),
+      document: () => ({})
     }
   },
+  DocumentResolver,
   AccountResolver,
-  AccessResolver
+  AccessResolver,
+  ListResolver
 );

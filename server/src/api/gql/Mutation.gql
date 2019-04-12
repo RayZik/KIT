@@ -1,4 +1,5 @@
 type Mutation {
   access: AccessMutations!
   account: AccountMutations!
+  document: DocumentMutations!
 }

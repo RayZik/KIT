@@ -1,0 +1,28 @@
+input ListOptions {
+  cursor: String
+  limit: Int
+}
+
+type List {
+  page: List__Page
+}
+
+type List__Page {
+  nodes: [ListPageNodes__Node]!
+  info: ListPage__Info
+}
+
+type ListPage__Info {
+  count: Int
+  hasNext: Boolean
+  hasPrevious: Boolean
+}
+
+type ListPageNodes__Node {
+  cursor: String
+  node: IListPageNodes__Node
+}
+
+interface IListPageNodes__Node {
+  id: ID!
+}

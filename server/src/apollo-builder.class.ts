@@ -25,7 +25,13 @@ export default class ApolloBuilderClass {
    * Apollo server configuration
    */
   setApollo() {
-    const schema = makeExecutableSchema({ typeDefs: [typeDefs], resolvers });
+    const schema = makeExecutableSchema({
+      typeDefs: [typeDefs],
+      resolvers,
+      resolverValidationOptions: {
+        requireResolversForResolveType: false
+      }
+    });
 
     const config: ApolloServerExpressConfig = {
       schema,

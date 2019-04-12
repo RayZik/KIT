@@ -1,0 +1,19 @@
+type DocumentItem implements IListPageNodes__Node {
+  id: ID!
+  name: String
+  description: String
+}
+
+type DocumentQueries {
+  get(id: ID!): DocumentItem
+}
+
+
+type DocumentMutations {
+  create(param: CreateDocument_Input!): DocumentItem
+}
+
+input CreateDocument_Input {
+  name: String!
+  description: String
+}
