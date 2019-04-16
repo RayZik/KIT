@@ -1,7 +1,6 @@
 import { CanLoad, Route, UrlSegment, Router } from '@angular/router';
 import { AuthStoreService } from '../services/auth-store.service';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 
 
 @Injectable()
@@ -15,6 +14,6 @@ export class AuthGuard implements CanLoad {
     if (this._authService.hasAuth()) {
       return true;
     }
-    this._router.navigateByUrl('auth');
+    this._router.navigateByUrl('guest');
   }
 }

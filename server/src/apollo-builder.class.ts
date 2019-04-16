@@ -37,11 +37,11 @@ export default class ApolloBuilderClass {
       schema,
       context: ({ req }): IAuthContext => {
         const {
-          headers: { authorization }
+          headers: { token }
         } = req;
 
         return {
-          token: authorization
+          token: String(token)
         };
       },
       formatResponse: this.formatResponseFn,

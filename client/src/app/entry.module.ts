@@ -6,12 +6,14 @@ import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { EntryComponent } from './entry.component';
 import { AuthGuard } from './guards/auth.guard';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 
 @NgModule({
   declarations: [
-    EntryComponent
+    EntryComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

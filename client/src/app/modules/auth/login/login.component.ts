@@ -40,7 +40,7 @@ export class LoginComponent {
 
             if (auth_local) {
               this._authStoreService.authInfo = auth_local.auth;
-              this._router.navigateByUrl('main');
+              this._router.navigateByUrl('panel');
             }
           },
           e => {

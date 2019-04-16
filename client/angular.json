@@ -7,7 +7,7 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "zk",
+      "prefix": "kit",
       "schematics": {
         "@schematics/angular:component": {
           "styleext": "less"

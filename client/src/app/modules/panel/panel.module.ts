@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { AuthRoutingModule } from './main-routing.module';
-import { MainComponent } from './main.component';
+import { PanelRoutingModule } from './panel-routing.module';
+import { PanelComponent } from './panel.component';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    MainComponent,
+    PanelComponent,
   ],
   imports: [
-    AuthRoutingModule,
+    PanelRoutingModule,
     ReactiveFormsModule,
     CommonModule
   ],
 })
-export class MainModule { }
+export class PanelModule { }

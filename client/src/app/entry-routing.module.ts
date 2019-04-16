@@ -6,17 +6,21 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'auth'
+    redirectTo: 'guest'
   },
   {
     path: 'auth',
     loadChildren: 'src/app/modules/auth/auth.module#AuthModule'
   },
   {
-    path: 'main',
-    loadChildren: 'src/app/modules/main/main.module#MainModule',
+    path: 'panel',
+    loadChildren: 'src/app/modules/panel/panel.module#PanelModule',
     canLoad: [AuthGuard]
-  }
+  },
+  {
+    path: 'guest',
+    loadChildren: 'src/app/modules/guest/guest.module#GuestModule'
+  },
 ];
 
 @NgModule({
