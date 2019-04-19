@@ -50,6 +50,7 @@
     "concurrently": "4.1.0",
     "cpx": "1.5.0",
     "gh-pages": "2.0.1",
+    "graphql-voyager": "^1.0.0-rc.27",
     "lodash": "4.17.11",
     "nodemon": "1.18.10",
     "typescript": "3.3.3333"

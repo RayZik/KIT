@@ -40,7 +40,7 @@ class App {
     // routes
     new ApolloBuilderClass(this.app);
     this.app.use(PublicRouter);
-    this.app.use('/voyager', voyagerMiddleware({ endpointUrl: this.apiPath }));
+    this.app.use('/graph', voyagerMiddleware({ endpointUrl: this.apiPath }));
     this.app.use((req: Request, res: Response, next: NextFunction) => {
       res.redirect(this.apiPath);
     });
