@@ -1,0 +1,5 @@
+Kit panel
+
+```
+$ npm start
+```

@@ -1,0 +1,16 @@
+{
+  "overrides": [
+    {
+      "files": [
+        "*.tsx",
+        "*.ts"
+      ],
+      "options": {
+        "arrowParens": "always",
+        "parser": "typescript",
+        "proseWrap": "always",
+        "singleQuote": true
+      }
+    }
+  ]
+}
