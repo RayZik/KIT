@@ -44,6 +44,11 @@
   },
   "dependencies": {
     "react": "16.8.6",
-    "react-dom": "16.8.6"
+    "react-dom": "16.8.6",
+    "react-apollo": "2.5.4",
+    "apollo-client-preset": "1.0.8",
+    "apollo-link-context": "1.0.17",
+    "graphql": "14.2.1",
+    "graphql-tag": "2.10.1"
   }
 }
