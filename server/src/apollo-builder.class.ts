@@ -2,7 +2,8 @@ import {
   ApolloServer,
   makeExecutableSchema,
   SchemaDirectiveVisitor,
-  ApolloServerExpressConfig
+  ApolloServerExpressConfig,
+  addMockFunctionsToSchema
 } from 'apollo-server-express';
 import { typeDefs, resolvers } from './api';
 import { schemaDirectives } from './api/directives';
@@ -48,6 +49,8 @@ export default class ApolloBuilderClass {
       formatError: this.formatErrorFn,
       tracing: true
     };
+
+    addMockFunctionsToSchema({ schema, preserveResolvers: true })
 
     new ApolloServer(config).applyMiddleware({
       app: this._app,
