@@ -5,7 +5,7 @@ import { DB } from '../db.class';
 interface IUser {
   email: string;
   name?: string;
-  avatar_url?: string;
+  avatarUrl?: string;
   password: string;
   salt: string;
 }

@@ -8,7 +8,7 @@ import {
 } from '../functions';
 import { AuthChecker } from '../decorators';
 import { getUserIdFromCtx } from '../../api/utils/tools';
-import { IAuthContext } from 'interface';
+import { IAuthContext } from './../../interface';
 
 export class DocumentController {
   @AuthChecker()

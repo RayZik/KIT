@@ -5,7 +5,7 @@ export default {
     get: (obj, args, ctx, info) => service(ctx, 'user', 'get', {})
   },
   UserMutations: {
-    set: (obj, { user_param }, ctx, info) =>
-      service(ctx, 'user', 'set', { params: user_param })
+    set: (obj, { userParam }, ctx, info) =>
+      service(ctx, 'user', 'set', { params: userParam })
   }
 };

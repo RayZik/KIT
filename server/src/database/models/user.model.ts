@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { Schema, Model, Document } from 'mongoose';
 
-import { IAuthInfo } from 'interface';
+import { IAuthInfo } from './../../interface';
 import { JWTController } from '../controllers';
 import { JWThelper } from '../../helpers/jwt.helper';
 import { DB } from '../db.class';
@@ -9,7 +9,7 @@ import { DB } from '../db.class';
 interface IUser {
   email: string;
   name?: string;
-  avatar_url?: string;
+  avatarUrl?: string;
   password: string;
   salt: string;
 }
@@ -35,7 +35,7 @@ const UserSchema: Schema<IUserSchema> = new Schema({
   name: {
     type: String
   },
-  avatar_url: {
+  avatarUrl: {
     type: String,
     default: ''
   },
@@ -58,7 +58,7 @@ UserSchema.methods.toAuthJSON = async function() {
     id: String(this._id),
     email: this.email,
     name: this.name,
-    avatar_url: this.avatar_url
+    avatarUrl: this.avatarUrl
   };
 
   return {

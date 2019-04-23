@@ -10,9 +10,10 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
 import path from 'path';
+import morgan from 'morgan';
 
 import { PublicRouter } from './routes';
-import { ApolloBuilderClass } from './apollo-builder.class';
+import ApolloBuilder from './apollo-builder';
 import { express as voyagerMiddleware } from 'graphql-voyager/middleware';
 
 /**
@@ -32,13 +33,14 @@ class App {
    * Express setter
    */
   setConfig() {
+    this.app.use(morgan('dev'));
     this.app.use(expressStatic(path.join(__dirname, 'public/client/dist')));
     this.app.use(cookieParser());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
 
     // routes
-    new ApolloBuilderClass(this.app);
+    new ApolloBuilder(this.app);
     this.app.use(PublicRouter);
     this.app.use('/graph', voyagerMiddleware({ endpointUrl: this.apiPath }));
     this.app.use((req: Request, res: Response, next: NextFunction) => {

@@ -8,12 +8,12 @@ import {
 import { typeDefs, resolvers } from './api';
 import { schemaDirectives } from './api/directives';
 import { GraphQLFormattedError } from 'graphql';
-import { IAuthContext } from 'interface';
+import { IAuthContext } from './interface';
 
 /**
  *
  */
-export default class ApolloBuilderClass {
+export default class ApolloBuilder {
   private _app;
   private _path = '/api';
 
@@ -88,5 +88,3 @@ export default class ApolloBuilderClass {
     return response.data ? response : { errors: response.errors };
   }
 }
-
-export { ApolloBuilderClass };

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { AuthChecker } from '../decorators';
-import { IAuthContext } from 'interface';
+import { IAuthContext } from './../../interface';
 import { GET_USER, SET_USER } from '../functions';
 import { getUserIdFromCtx } from '../../api/utils/tools';
 

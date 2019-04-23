@@ -4,7 +4,7 @@ import { combineResolvers } from 'graphql-resolvers';
 import _ from 'lodash';
 import { JWThelper } from '../helpers/jwt.helper';
 import { getDirFileContents } from './utils/tools';
-import { IAuthContext } from 'interface';
+import { IAuthContext } from './../interface';
 
 export const typeDefs = getDirFileContents(`${__dirname}/gql`, '.gql').join();
 

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { IAuthContext } from 'interface';
+import { IAuthContext } from './../../interface';
 import {
   REFRESH_TOKEN,
   REMOVE_REFRESH_TOKEN,

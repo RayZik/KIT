@@ -2,7 +2,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import { AuthenticationError } from 'apollo-server-core';
 import { JWThelper } from '../../helpers/jwt.helper';
-import { IAuthContext } from 'interface';
+import { IAuthContext } from './../../interface';
 
 /**
  * Get file contents

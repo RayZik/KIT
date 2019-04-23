@@ -1,5 +1,5 @@
 import controllers from '../database/controllers';
-import { IAuthContext } from 'interface';
+import { IAuthContext } from './../interface';
 
 /** type for getting type of params */
 type TParams<T> = T extends (req: infer A, ctx: IAuthContext) => any
