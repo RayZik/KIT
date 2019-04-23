@@ -1,0 +1,17 @@
+.kit-top-block {
+  display: flex;
+  /* Safari */
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+
+  background-color: #fff;
+  height: 80px;
+}
+
+.kit-top-block__logo {
+  height: inherit;
+}
+
+.kit-top-block__profile {
+  display: flex;
+}
