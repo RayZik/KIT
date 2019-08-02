@@ -25,17 +25,18 @@
   "license": "ISC",
   "homepage": "https://github.com/RayZik",
   "dependencies": {
-    "apollo-server-express": "2.4.8",
-    "body-parser": "1.18.3",
+    "@playlyfe/gql": "2.6.1",
+    "@world-kit/gql-mock": "0.4.1",
+    "apollo-server-express": "2.5.0",
+    "axios": "^0.18.0",
+    "body-parser": "1.19.0",
     "cookie-parser": "1.4.4",
-    "express": "4.16.4",
+    "express": "4.17.0",
     "express-jwt": "5.3.1",
-    "graphql": "14.2.1",
-    "graphql-resolvers": "0.3.2",
+    "graphql": "14.3.1",
+    "graphql-resolvers": "0.3.3",
     "jsonwebtoken": "8.5.1",
-    "mongoose": "5.5.2",
-    "uuid": "3.3.2",
-    "@playlyfe/gql": "2.6.1"
+    "mongoose": "5.5.2"
   },
   "devDependencies": {
     "@types/cookie-parser": "1.4.1",

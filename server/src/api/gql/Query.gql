@@ -1,7 +1,8 @@
 scalar JSON
+scalar Number
 
 type Query {
   list(options: ListOptions): List!
   account: AccountQueries
   document: DocumentQueries
-}
+} 

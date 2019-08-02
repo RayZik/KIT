@@ -3,12 +3,18 @@ import {
   makeExecutableSchema,
   SchemaDirectiveVisitor,
   ApolloServerExpressConfig,
+  IMockFn,
   addMockFunctionsToSchema
 } from 'apollo-server-express';
 import { typeDefs, resolvers } from './api';
 import { schemaDirectives } from './api/directives';
 import { GraphQLFormattedError } from 'graphql';
 import { IAuthContext } from './interface';
+
+import { GQLMock } from '@world-kit/gql-mock';
+
+import axios from 'axios';
+import _ from 'lodash';
 
 /**
  *
@@ -33,7 +39,6 @@ export default class ApolloBuilder {
         requireResolversForResolveType: false
       }
     });
-
     const config: ApolloServerExpressConfig = {
       schema,
       context: ({ req }): IAuthContext => {
@@ -50,14 +55,32 @@ export default class ApolloBuilder {
       tracing: true
     };
 
-    addMockFunctionsToSchema({ schema, preserveResolvers: true })
+    getMocks().then((mockData) => {
+      const defaultValues = new Map<string, IMockFn>([
+        ['Number', () => 5555],
+        ['JSON', () => ({ value: 'JSON' })],
+        ['String', () => 'string']
+      ]);
+
+      const gqlMock = new GQLMock(schema, {
+        preparedMocks: mockData,
+        defaultTypesValue: defaultValues 
+      });
+      syncMocks(gqlMock.mocks); 
+
+      addMockFunctionsToSchema({
+        schema,  
+        mocks: gqlMock.funcMocks,
+        preserveResolvers: true
+      });
+
+      SchemaDirectiveVisitor.visitSchemaDirectives(schema, schemaDirectives);
+    });
 
     new ApolloServer(config).applyMiddleware({
       app: this._app,
       path: this._path
     });
-
-    SchemaDirectiveVisitor.visitSchemaDirectives(schema, schemaDirectives);
   }
 
   /**
@@ -87,4 +110,19 @@ export default class ApolloBuilder {
   formatResponseFn(response) {
     return response.data ? response : { errors: response.errors };
   }
+}
+
+export async function getMocks() {
+  try {
+    let result = await axios.get('http://localhost:9999/users/1');
+    return result.data.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export function syncMocks(mocks) {
+  let result = axios.put('http://localhost:9999/users/1', {
+    data: mocks
+  });
 }
