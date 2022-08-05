@@ -33,7 +33,7 @@
     "graphql": "14.2.1",
     "graphql-resolvers": "0.3.2",
     "jsonwebtoken": "8.5.1",
-    "mongoose": "5.5.2",
+    "mongoose": "5.7.5",
     "uuid": "3.3.2",
     "@playlyfe/gql": "2.6.1"
   },
