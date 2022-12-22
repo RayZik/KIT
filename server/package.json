@@ -32,7 +32,7 @@
     "express-jwt": "5.3.1",
     "graphql": "14.2.1",
     "graphql-resolvers": "0.3.2",
-    "jsonwebtoken": "8.5.1",
+    "jsonwebtoken": "9.0.0",
     "mongoose": "5.5.2",
     "uuid": "3.3.2",
     "@playlyfe/gql": "2.6.1"
